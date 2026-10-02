@@ -38,3 +38,4 @@ with logo_col:
     st.image(str(logo_path), width=170)
 
 st.markdown('
+')            
