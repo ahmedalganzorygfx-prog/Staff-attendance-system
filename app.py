@@ -16,9 +16,10 @@ st.set_page_config(
 init_db()
 
 # ---------- Style ----------
-st.markdown("""
+style_css = """
 
-""", unsafe_allow_html=True)
+"""
+st.markdown(style_css, unsafe_allow_html=True)
 
 branch_name = get_setting("branch_name", "الأكاديمية المهنية للمعلمين – فرع الجيزة")
 
