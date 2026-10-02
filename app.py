@@ -31,7 +31,7 @@ if "admin" not in st.session_state:
 # ---------- Header & Logo ----------
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 
-# توسيط اللوجو وتكبيره (عرض 170px)
+# توسيط اللوجو وتكبيره
 _, logo_col, _ = st.columns([1, 1.5, 1])
 with logo_col:
     st.image(str(logo_path), width=170)
