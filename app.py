@@ -1,8 +1,9 @@
 import io
 from datetime import date
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
-from pathlib import Path
 
 from database import *
 from utils import distance_meters, valid_coords, token
@@ -37,7 +38,9 @@ html,
 body,
 [data-testid="stAppViewContainer"],
 [data-testid="stApp"] {
+
     direction: rtl !important;
+
 }
 
 
@@ -46,16 +49,21 @@ body,
    ========================================================= */
 
 .main .block-container {
+
     max-width: 760px !important;
+
     width: 100% !important;
 
     margin-left: auto !important;
+
     margin-right: auto !important;
 
     padding-top: 1rem !important;
+
     padding-bottom: 2rem !important;
 
     direction: rtl !important;
+
 }
 
 
@@ -64,7 +72,9 @@ body,
    ========================================================= */
 
 [data-testid="stVerticalBlock"] {
+
     direction: rtl !important;
+
 }
 
 
@@ -73,13 +83,19 @@ body,
    ========================================================= */
 
 section[data-testid="stSidebar"] {
+
     direction: rtl !important;
+
     text-align: right !important;
+
 }
 
 section[data-testid="stSidebar"] * {
+
     direction: rtl !important;
+
     text-align: right !important;
+
 }
 
 
@@ -89,51 +105,71 @@ section[data-testid="stSidebar"] * {
    ========================================================= */
 
 section[data-testid="stSidebar"][aria-expanded="false"] {
+
     width: 0 !important;
+
     min-width: 0 !important;
+
     max-width: 0 !important;
 
     padding: 0 !important;
+
     margin: 0 !important;
 
     overflow: hidden !important;
+
 }
 
 section[data-testid="stSidebar"][aria-expanded="false"] > div {
+
     width: 0 !important;
+
     min-width: 0 !important;
+
     max-width: 0 !important;
 
     padding: 0 !important;
+
     margin: 0 !important;
 
     overflow: hidden !important;
+
 }
 
 section[data-testid="stSidebar"][aria-expanded="false"] * {
+
     visibility: hidden !important;
+
 }
 
 
 /* =========================================================
    رأس البرنامج بالكامل
+   محور مركزي واحد
    ========================================================= */
 
 .app-header {
+
     width: 100% !important;
 
+    max-width: 760px !important;
+
+    margin: 0 auto 24px auto !important;
+
+    padding: 0 !important;
+
     display: flex !important;
+
     flex-direction: column !important;
 
     align-items: center !important;
-    justify-content: center !important;
+
+    justify-content: flex-start !important;
 
     text-align: center !important;
 
     direction: rtl !important;
 
-    margin: 0 auto 24px auto !important;
-    padding: 0 !important;
 }
 
 
@@ -142,14 +178,42 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
    ========================================================= */
 
 .app-logo {
+
     display: block !important;
 
     width: 150px !important;
+
     height: 150px !important;
 
     object-fit: contain !important;
 
-    margin: 0 auto 10px auto !important;
+    margin: 0 auto 12px auto !important;
+
+    padding: 0 !important;
+
+    align-self: center !important;
+
+}
+
+
+/* =========================================================
+   حاوية اللوجو
+   ========================================================= */
+
+.app-logo-wrap {
+
+    width: 100% !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    margin: 0 auto 12px auto !important;
+
+    padding: 0 !important;
+
 }
 
 
@@ -158,20 +222,25 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
    ========================================================= */
 
 .app-title {
+
     width: 100% !important;
 
     display: block !important;
 
+    margin: 0 auto !important;
+
+    padding: 0 !important;
+
     text-align: center !important;
+
     direction: rtl !important;
 
     font-size: 1.85rem !important;
+
     font-weight: 800 !important;
 
     line-height: 1.5 !important;
 
-    margin: 0 auto !important;
-    padding: 0 !important;
 }
 
 
@@ -180,22 +249,27 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
    ========================================================= */
 
 .app-branch {
+
     width: 100% !important;
 
     display: block !important;
 
+    margin: 5px auto 0 auto !important;
+
+    padding: 0 !important;
+
     text-align: center !important;
+
     direction: rtl !important;
 
     font-size: 1.12rem !important;
+
     font-weight: 700 !important;
 
     line-height: 1.5 !important;
 
-    margin: 5px auto 0 auto !important;
-    padding: 0 !important;
-
     color: #d9b35f !important;
+
 }
 
 
@@ -204,20 +278,25 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
    ========================================================= */
 
 .app-subtitle {
+
     width: 100% !important;
 
     display: block !important;
 
+    margin: 5px auto 0 auto !important;
+
+    padding: 0 !important;
+
     text-align: center !important;
+
     direction: rtl !important;
 
     color: #aeb6c8 !important;
 
     font-size: .98rem !important;
+
     line-height: 1.5 !important;
 
-    margin: 5px auto 0 auto !important;
-    padding: 0 !important;
 }
 
 
@@ -239,8 +318,11 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
 .stForm,
 .stFormSubmitButton,
 .stDataFrame {
+
     direction: rtl !important;
+
     text-align: right !important;
+
 }
 
 
@@ -252,8 +334,11 @@ label,
 [data-testid="stWidgetLabel"],
 [data-testid="stWidgetLabel"] p,
 [data-testid="stWidgetLabel"] div {
+
     direction: rtl !important;
+
     text-align: right !important;
+
 }
 
 
@@ -264,8 +349,11 @@ label,
 input,
 textarea,
 select {
+
     direction: rtl !important;
+
     text-align: right !important;
+
 }
 
 
@@ -274,7 +362,9 @@ select {
    ========================================================= */
 
 button {
+
     direction: rtl !important;
+
 }
 
 
@@ -283,11 +373,15 @@ button {
    ========================================================= */
 
 .card {
+
     border: 1px solid rgba(128,128,128,.25);
+
     border-radius: 14px;
 
     padding: 18px;
+
     margin-bottom: 14px;
+
 }
 
 
@@ -297,10 +391,13 @@ button {
 
 [data-testid="stMetricValue"],
 [data-testid="stMetricLabel"] {
+
     text-align: center !important;
+
 }
 
 </style>
+
 """, unsafe_allow_html=True)
 
 
@@ -319,15 +416,21 @@ branch_name = get_setting(
 # =========================================================
 
 def is_admin():
-    return st.session_state.get("admin", False)
+
+    return st.session_state.get(
+        "admin",
+        False
+    )
 
 
 if "admin" not in st.session_state:
+
     st.session_state.admin = False
 
 
 # =========================================================
-# شعار الفرع + اسم البرنامج + اسم الفرع
+# شعار الفرع + اسم البرنامج + اسم الفرع + الوصف
+# محور مركزي واحد تمامًا
 # =========================================================
 
 logo_path = (
@@ -344,12 +447,22 @@ st.markdown(
 
 
 # ---------------------------------------------------------
-# الشعار
+# اللوجو
 # ---------------------------------------------------------
+
+st.markdown(
+    '<div class="app-logo-wrap">',
+    unsafe_allow_html=True
+)
 
 st.image(
     str(logo_path),
     width=150
+)
+
+st.markdown(
+    '</div>',
+    unsafe_allow_html=True
 )
 
 
@@ -358,7 +471,9 @@ st.image(
 # ---------------------------------------------------------
 
 st.markdown(
-    '<div class="app-title">نظام الحضور والانصراف</div>',
+    '<div class="app-title">'
+    'نظام الحضور والانصراف'
+    '</div>',
     unsafe_allow_html=True
 )
 
@@ -368,7 +483,9 @@ st.markdown(
 # ---------------------------------------------------------
 
 st.markdown(
-    f'<div class="app-branch">{branch_name}</div>',
+    f'<div class="app-branch">'
+    f'{branch_name}'
+    f'</div>',
     unsafe_allow_html=True
 )
 
@@ -399,19 +516,30 @@ with st.sidebar:
 
     st.markdown("## القائمة")
 
+
     pages = [
+
         "تسجيل الحضور والانصراف",
+
         "QR Code"
+
     ]
+
 
     if is_admin():
 
         pages += [
+
             "لوحة الإدارة",
+
             "الموظفون",
+
             "التقارير",
+
             "إعدادات الفرع"
+
         ]
+
 
         if st.button(
             "تسجيل خروج الإدارة",
@@ -422,11 +550,15 @@ with st.sidebar:
 
             st.rerun()
 
+
     else:
 
         pages += [
+
             "دخول الإدارة"
+
         ]
+
 
     page = st.radio(
         "",
@@ -558,6 +690,7 @@ if page == "تسجيل الحضور والانصراف":
             loc = get_geolocation(
                 component_key="attendance_location"
             )
+
 
         except Exception as e:
 
@@ -780,6 +913,7 @@ elif page == "QR Code":
 
             buf = io.BytesIO()
 
+
             img.save(
                 buf,
                 format="PNG"
@@ -848,6 +982,7 @@ elif page == "دخول الإدارة":
             st.session_state.admin = True
 
             st.rerun()
+
 
         else:
 
@@ -965,6 +1100,7 @@ elif page == "الموظفون":
                 )
 
                 st.rerun()
+
 
             else:
 
@@ -1118,9 +1254,11 @@ elif page == "الموظفون":
                 not bool(emp["active"])
             )
 
+
             st.success(
                 "تم تغيير حالة الموظف."
             )
+
 
             st.rerun()
 
@@ -1134,9 +1272,11 @@ elif page == "الموظفون":
                 selected_code
             )
 
+
             st.success(
                 "تم حذف الموظف."
             )
+
 
             st.rerun()
 
