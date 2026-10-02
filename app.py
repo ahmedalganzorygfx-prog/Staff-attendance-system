@@ -1,4 +1,5 @@
 import io
+import base64
 from datetime import date
 from pathlib import Path
 
@@ -101,7 +102,6 @@ section[data-testid="stSidebar"] * {
 
 /* =========================================================
    عند إخفاء / طي القائمة الجانبية
-   منع ظهور الحروف المقطعة
    ========================================================= */
 
 section[data-testid="stSidebar"][aria-expanded="false"] {
@@ -145,7 +145,7 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
 
 /* =========================================================
    رأس البرنامج بالكامل
-   محور مركزي واحد
+   محور مركزي واحد فعليًا
    ========================================================= */
 
 .app-header {
@@ -174,29 +174,6 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
 
 
 /* =========================================================
-   شعار الفرع
-   ========================================================= */
-
-.app-logo {
-
-    display: block !important;
-
-    width: 150px !important;
-
-    height: 150px !important;
-
-    object-fit: contain !important;
-
-    margin: 0 auto 12px auto !important;
-
-    padding: 0 !important;
-
-    align-self: center !important;
-
-}
-
-
-/* =========================================================
    حاوية اللوجو
    ========================================================= */
 
@@ -211,6 +188,37 @@ section[data-testid="stSidebar"][aria-expanded="false"] * {
     justify-content: center !important;
 
     margin: 0 auto 12px auto !important;
+
+    padding: 0 !important;
+
+    text-align: center !important;
+
+}
+
+
+/* =========================================================
+   اللوجو
+   ========================================================= */
+
+.app-logo {
+
+    display: block !important;
+
+    width: 150px !important;
+
+    height: 150px !important;
+
+    min-width: 150px !important;
+
+    max-width: 150px !important;
+
+    min-height: 150px !important;
+
+    max-height: 150px !important;
+
+    object-fit: contain !important;
+
+    margin: 0 auto !important;
 
     padding: 0 !important;
 
@@ -397,7 +405,6 @@ button {
 }
 
 </style>
-
 """, unsafe_allow_html=True)
 
 
@@ -440,67 +447,104 @@ logo_path = (
 )
 
 
+# =========================================================
+# التحقق من وجود اللوجو
+# =========================================================
+
+if logo_path.exists():
+
+    logo_data = base64.b64encode(
+        logo_path.read_bytes()
+    ).decode("utf-8")
+
+else:
+
+    logo_data = ""
+
+
+# =========================================================
+# بداية رأس البرنامج
+# =========================================================
+
 st.markdown(
     '<div class="app-header">',
     unsafe_allow_html=True
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # اللوجو
-# ---------------------------------------------------------
+# =========================================================
 
-st.markdown(
-    '<div class="app-logo-wrap">',
-    unsafe_allow_html=True
-)
+if logo_data:
 
-st.image(
-    str(logo_path),
-    width=150
-)
+    st.markdown(
+        f"""
+        <div class="app-logo-wrap">
 
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
-)
+            <img
+                src="data:image/png;base64,{logo_data}"
+                class="app-logo"
+                alt="شعار الأكاديمية"
+            >
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+else:
+
+    st.warning(
+        "لم يتم العثور على ملف الشعار: assets/logo.png"
+    )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # اسم البرنامج
-# ---------------------------------------------------------
+# =========================================================
 
 st.markdown(
-    '<div class="app-title">'
-    'نظام الحضور والانصراف'
-    '</div>',
+    """
+    <div class="app-title">
+        نظام الحضور والانصراف
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # اسم الفرع
-# ---------------------------------------------------------
+# =========================================================
 
 st.markdown(
-    f'<div class="app-branch">'
-    f'{branch_name}'
-    f'</div>',
+    f"""
+    <div class="app-branch">
+        {branch_name}
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # وصف البرنامج
-# ---------------------------------------------------------
+# =========================================================
 
 st.markdown(
-    '<div class="app-subtitle">'
-    'نظام رقمي لإدارة حضور وانصراف موظفي الفرع'
-    '</div>',
+    """
+    <div class="app-subtitle">
+        نظام رقمي لإدارة حضور وانصراف موظفي الفرع
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
+
+# =========================================================
+# نهاية رأس البرنامج
+# =========================================================
 
 st.markdown(
     '</div>',
@@ -518,26 +562,18 @@ with st.sidebar:
 
 
     pages = [
-
         "تسجيل الحضور والانصراف",
-
         "QR Code"
-
     ]
 
 
     if is_admin():
 
         pages += [
-
             "لوحة الإدارة",
-
             "الموظفون",
-
             "التقارير",
-
             "إعدادات الفرع"
-
         ]
 
 
@@ -554,9 +590,7 @@ with st.sidebar:
     else:
 
         pages += [
-
             "دخول الإدارة"
-
         ]
 
 
