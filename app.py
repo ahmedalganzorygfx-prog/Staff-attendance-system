@@ -7,6 +7,11 @@ from pathlib import Path
 from database import *
 from utils import distance_meters, valid_coords, token
 
+
+# =========================================================
+# إعداد الصفحة
+# =========================================================
+
 st.set_page_config(
     page_title="نظام حضور وانصراف الموظفين",
     page_icon="assets/logo.png",
@@ -16,39 +21,209 @@ st.set_page_config(
 
 init_db()
 
+
 # =========================================================
-# Style
+# CSS - RTL + توسيط البرنامج + ضبط القائمة الجانبية
 # =========================================================
+
 st.markdown("""
 <style>
 
-html, body,
+/* =========================================================
+   الاتجاه العام
+   ========================================================= */
+
+html,
+body,
 [data-testid="stAppViewContainer"],
 [data-testid="stApp"] {
     direction: rtl !important;
 }
 
+
+/* =========================================================
+   الحاوية الرئيسية
+   ========================================================= */
+
 .main .block-container {
     max-width: 760px !important;
     width: 100% !important;
-    margin: 0 auto !important;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+
     padding-top: 1rem !important;
     padding-bottom: 2rem !important;
+
     direction: rtl !important;
 }
+
+
+/* =========================================================
+   جميع العناصر الداخلية
+   ========================================================= */
 
 [data-testid="stVerticalBlock"] {
-    direction: rtl;
-}
-
-[data-testid="stSidebar"] {
     direction: rtl !important;
 }
 
-[data-testid="stSidebar"] * {
+
+/* =========================================================
+   القائمة الجانبية
+   ========================================================= */
+
+section[data-testid="stSidebar"] {
+    direction: rtl !important;
     text-align: right !important;
-    direction: rtl !important;
 }
+
+section[data-testid="stSidebar"] * {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+
+/* =========================================================
+   عند إخفاء / طي القائمة الجانبية
+   منع ظهور الحروف المقطعة
+   ========================================================= */
+
+section[data-testid="stSidebar"][aria-expanded="false"] {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    overflow: hidden !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] > div {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    overflow: hidden !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] * {
+    visibility: hidden !important;
+}
+
+
+/* =========================================================
+   رأس البرنامج بالكامل
+   ========================================================= */
+
+.app-header {
+    width: 100% !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-align: center !important;
+
+    direction: rtl !important;
+
+    margin: 0 auto 24px auto !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   شعار الفرع
+   ========================================================= */
+
+.app-logo {
+    display: block !important;
+
+    width: 150px !important;
+    height: 150px !important;
+
+    object-fit: contain !important;
+
+    margin: 0 auto 10px auto !important;
+}
+
+
+/* =========================================================
+   اسم البرنامج
+   ========================================================= */
+
+.app-title {
+    width: 100% !important;
+
+    display: block !important;
+
+    text-align: center !important;
+    direction: rtl !important;
+
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+
+    line-height: 1.5 !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   اسم الفرع
+   ========================================================= */
+
+.app-branch {
+    width: 100% !important;
+
+    display: block !important;
+
+    text-align: center !important;
+    direction: rtl !important;
+
+    font-size: 1.12rem !important;
+    font-weight: 700 !important;
+
+    line-height: 1.5 !important;
+
+    margin: 5px auto 0 auto !important;
+    padding: 0 !important;
+
+    color: #d9b35f !important;
+}
+
+
+/* =========================================================
+   وصف البرنامج
+   ========================================================= */
+
+.app-subtitle {
+    width: 100% !important;
+
+    display: block !important;
+
+    text-align: center !important;
+    direction: rtl !important;
+
+    color: #aeb6c8 !important;
+
+    font-size: .98rem !important;
+    line-height: 1.5 !important;
+
+    margin: 5px auto 0 auto !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   النصوص والعناوين
+   ========================================================= */
 
 .stMarkdown,
 .stText,
@@ -68,82 +243,58 @@ html, body,
     text-align: right !important;
 }
 
+
+/* =========================================================
+   عناوين الحقول
+   ========================================================= */
+
 label,
+[data-testid="stWidgetLabel"],
 [data-testid="stWidgetLabel"] p,
 [data-testid="stWidgetLabel"] div {
-    text-align: right !important;
     direction: rtl !important;
+    text-align: right !important;
 }
 
+
+/* =========================================================
+   حقول الإدخال
+   ========================================================= */
+
 input,
-textarea {
+textarea,
+select {
     direction: rtl !important;
     text-align: right !important;
 }
+
+
+/* =========================================================
+   الأزرار
+   ========================================================= */
 
 button {
     direction: rtl !important;
 }
 
+
 /* =========================================================
-   رأس البرنامج
+   البطاقات
    ========================================================= */
 
-.app-header {
-    width: 100%;
-    text-align: center !important;
-    margin: 0 auto 22px auto;
-    padding: 10px 10px 4px;
-    direction: rtl !important;
-}
-
-/* الشعار - أكبر قليلًا ومتمركز */
-.app-logo {
-    display: block !important;
-    width: 150px !important;
-    height: 150px !important;
-    object-fit: contain !important;
-    margin: 0 auto 12px auto !important;
-}
-
-/* عنوان البرنامج */
-.app-title {
-    width: 100%;
-    text-align: center !important;
-    font-size: 1.85rem;
-    font-weight: 800;
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* اسم الفرع */
-.app-branch {
-    width: 100%;
-    text-align: center !important;
-    font-size: 1.12rem;
-    font-weight: 700;
-    margin-top: 6px;
-    color: #d9b35f;
-}
-
-/* وصف البرنامج */
-.app-subtitle {
-    width: 100%;
-    text-align: center !important;
-    color: #aeb6c8;
-    margin-top: 5px;
-    font-size: .98rem;
-}
-
-/* البطاقات */
 .card {
     border: 1px solid rgba(128,128,128,.25);
     border-radius: 14px;
+
     padding: 18px;
     margin-bottom: 14px;
 }
 
-/* المؤشرات */
+
+/* =========================================================
+   المؤشرات
+   ========================================================= */
+
 [data-testid="stMetricValue"],
 [data-testid="stMetricLabel"] {
     text-align: center !important;
@@ -176,37 +327,66 @@ if "admin" not in st.session_state:
 
 
 # =========================================================
-# شعار الفرع
+# شعار الفرع + اسم البرنامج + اسم الفرع
 # =========================================================
 
-logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
-
-# توسيط الشعار باستخدام الأعمدة
-logo_col = st.columns([1, 2, 1])[1]
-
-with logo_col:
-    st.image(
-        str(logo_path),
-        width=150
-    )
+logo_path = (
+    Path(__file__).resolve().parent
+    / "assets"
+    / "logo.png"
+)
 
 
-# =========================================================
-# عنوان البرنامج
-# =========================================================
+st.markdown(
+    '<div class="app-header">',
+    unsafe_allow_html=True
+)
+
+
+# ---------------------------------------------------------
+# الشعار
+# ---------------------------------------------------------
+
+st.image(
+    str(logo_path),
+    width=150
+)
+
+
+# ---------------------------------------------------------
+# اسم البرنامج
+# ---------------------------------------------------------
 
 st.markdown(
     '<div class="app-title">نظام الحضور والانصراف</div>',
     unsafe_allow_html=True
 )
 
+
+# ---------------------------------------------------------
+# اسم الفرع
+# ---------------------------------------------------------
+
 st.markdown(
     f'<div class="app-branch">{branch_name}</div>',
     unsafe_allow_html=True
 )
 
+
+# ---------------------------------------------------------
+# وصف البرنامج
+# ---------------------------------------------------------
+
 st.markdown(
-    '<div class="app-subtitle">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>',
+    '<div class="app-subtitle">'
+    'نظام رقمي لإدارة حضور وانصراف موظفي الفرع'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+
+st.markdown(
+    '</div>',
     unsafe_allow_html=True
 )
 
@@ -237,7 +417,9 @@ with st.sidebar:
             "تسجيل خروج الإدارة",
             use_container_width=True
         ):
+
             st.session_state.admin = False
+
             st.rerun()
 
     else:
@@ -258,20 +440,29 @@ with st.sidebar:
 
 if page == "تسجيل الحضور والانصراف":
 
-    st.subheader("📍 تسجيل الحضور والانصراف")
+    st.subheader(
+        "📍 تسجيل الحضور والانصراف"
+    )
 
-    token_from_url = st.query_params.get("site", "")
+
+    token_from_url = st.query_params.get(
+        "site",
+        ""
+    )
+
 
     configured_token = get_setting(
         "site_token",
         ""
     )
 
+
     if not token_from_url:
 
         st.warning(
             "يجب فتح هذه الصفحة من خلال QR Code الخاص بالفرع."
         )
+
 
     elif not configured_token or token_from_url != configured_token:
 
@@ -303,6 +494,7 @@ if page == "تسجيل الحضور والانصراف":
 
         code = normalize_code(code)
 
+
         if not code:
 
             st.error(
@@ -316,6 +508,7 @@ if page == "تسجيل الحضور والانصراف":
             code,
             active_only=True
         )
+
 
         if not employee:
 
@@ -331,10 +524,12 @@ if page == "تسجيل الحضور والانصراف":
             ""
         )
 
+
         lon = get_setting(
             "branch_longitude",
             ""
         )
+
 
         radius = float(
             get_setting(
@@ -344,7 +539,10 @@ if page == "تسجيل الحضور والانصراف":
         )
 
 
-        if not valid_coords(lat, lon):
+        if not valid_coords(
+            lat,
+            lon
+        ):
 
             st.error(
                 "لم يتم ضبط إحداثيات الفرع بعد. ادخل إلى إعدادات الفرع من الإدارة."
@@ -396,13 +594,16 @@ if page == "تسجيل الحضور والانصراف":
             {}
         )
 
+
         user_lat = coords.get(
             "latitude"
         )
 
+
         user_lon = coords.get(
             "longitude"
         )
+
 
         accuracy = coords.get(
             "accuracy"
@@ -429,7 +630,8 @@ if page == "تسجيل الحضور والانصراف":
         if accuracy is not None:
 
             st.info(
-                f"المسافة عن الفرع: {dist:.1f} متر | دقة GPS: {float(accuracy):.1f} متر"
+                f"المسافة عن الفرع: {dist:.1f} متر | "
+                f"دقة GPS: {float(accuracy):.1f} متر"
             )
 
         else:
@@ -442,13 +644,16 @@ if page == "تسجيل الحضور والانصراف":
         if dist > radius:
 
             st.error(
-                f"لم يتم التسجيل: الجهاز خارج نطاق الفرع المحدد ({radius:.0f} متر)."
+                f"لم يتم التسجيل: الجهاز خارج نطاق الفرع المحدد "
+                f"({radius:.0f} متر)."
             )
 
             st.stop()
 
 
-        today = today_records(code)
+        today = today_records(
+            code
+        )
 
 
         if action == "حضور":
@@ -502,19 +707,24 @@ if page == "تسجيل الحضور والانصراف":
 
 
         st.success(
-            f"تم تسجيل {action} بنجاح للموظف: {employee['name']}"
+            f"تم تسجيل {action} بنجاح للموظف: "
+            f"{employee['name']}"
         )
 
 
     if code:
 
-        rows = today_records(code)
+        rows = today_records(
+            code
+        )
+
 
         if rows:
 
             st.markdown(
                 "### سجل اليوم"
             )
+
 
             st.dataframe(
                 pd.DataFrame(rows),
@@ -546,19 +756,27 @@ elif page == "QR Code":
             "يجب على الإدارة إنشاء QR أولًا من إعدادات الفرع."
         )
 
+
     else:
 
         try:
 
             import qrcode
 
-            base = st.context.url.split("?")[0]
+            base = st.context.url.split(
+                "?"
+            )[0]
+
 
             url = (
                 f"{base}?site={site_token}&action=حضور"
             )
 
-            img = qrcode.make(url)
+
+            img = qrcode.make(
+                url
+            )
+
 
             buf = io.BytesIO()
 
@@ -566,6 +784,7 @@ elif page == "QR Code":
                 buf,
                 format="PNG"
             )
+
 
             data = buf.getvalue()
 
@@ -610,7 +829,8 @@ elif page == "دخول الإدارة":
 
 
     st.caption(
-        "كلمة المرور الافتراضية في النسخة الجديدة: 123456 — غيّرها من إعدادات الفرع."
+        "كلمة المرور الافتراضية في النسخة الجديدة: "
+        "123456 — غيّرها من إعدادات الفرع."
     )
 
 
@@ -1017,19 +1237,25 @@ elif page == "إعدادات الفرع":
 
     name = st.text_input(
         "اسم الفرع",
-        value=get_setting("branch_name")
+        value=get_setting(
+            "branch_name"
+        )
     )
 
 
     lat = st.text_input(
         "خط العرض",
-        value=get_setting("branch_latitude")
+        value=get_setting(
+            "branch_latitude"
+        )
     )
 
 
     lon = st.text_input(
         "خط الطول",
-        value=get_setting("branch_longitude")
+        value=get_setting(
+            "branch_longitude"
+        )
     )
 
 
@@ -1069,6 +1295,7 @@ elif page == "إعدادات الفرع":
                 "أدخل إحداثيات صحيحة."
             )
 
+
         else:
 
             set_setting(
@@ -1076,15 +1303,18 @@ elif page == "إعدادات الفرع":
                 name
             )
 
+
             set_setting(
                 "branch_latitude",
                 lat
             )
 
+
             set_setting(
                 "branch_longitude",
                 lon
             )
+
 
             set_setting(
                 "radius_m",
@@ -1103,6 +1333,7 @@ elif page == "إعدادات الفرع":
             st.success(
                 "تم حفظ الإعدادات."
             )
+
 
             st.rerun()
 
@@ -1125,9 +1356,11 @@ elif page == "إعدادات الفرع":
             token()
         )
 
+
         st.success(
             "تم إنشاء QR جديد."
         )
+
 
         st.rerun()
 
@@ -1142,6 +1375,7 @@ elif page == "إعدادات الفرع":
 # =========================================================
 
 st.divider()
+
 
 st.caption(
     "✦ تصميم وتنفيذ أحمد الجنزوري ✦"
