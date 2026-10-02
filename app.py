@@ -1,4 +1,3 @@
-```python
 import io
 from datetime import date
 import pandas as pd
@@ -1147,4 +1146,3 @@ st.divider()
 st.caption(
     "✦ تصميم وتنفيذ أحمد الجنزوري ✦"
 )
-```
