@@ -16,7 +16,7 @@ st.set_page_config(
 )
 init_db()
 
-# 2. التنسيق والتوسيط عبر CSS القياسي
+# 2. التنسيق: توسيط العناوين، نقل القائمة لليمين، اتجاه الخط عربي (RTL)
 st.markdown("""
 
 """, unsafe_allow_html=True)
@@ -30,19 +30,17 @@ def is_admin():
 if "admin" not in st.session_state:
     st.session_state.admin = False
 
-# 4. الشعار والهيدر
+# 4. اللوجو والعناوين المنيقة في المنتصف
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
-logo_col = st.columns([1, 1, 1])[1]
-with logo_col:
-    if logo_path.exists():
-        st.image(str(logo_path), width=95)
+if logo_path.exists():
+    st.image(str(logo_path), width=120)
 
 st.title("منظومة حضور وانصراف العاملين")
 st.subheader(f"{branch_name} – فرع الجيزة")
 st.caption("نظام رقمي لإدارة حضور وانصراف موظفي الفرع")
 st.divider()
 
-# 5. القائمة الجانبية
+# 5. القائمة الجانبية جهة اليمين
 with st.sidebar:
     st.markdown("### ☰ القائمة")
     pages = ["تسجيل الحضور والانصراف", "QR Code"]
@@ -231,6 +229,6 @@ elif page == "إعدادات الفرع":
     if st.button("إنشاء / تغيير QR", use_container_width=True):
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
-# 7. التذييل السفلي
+# 7. التذييل
 st.divider()
 st.caption("— تصميم وتنفيذ أحمد الجنزوري (مدير الفرع) —")
