@@ -465,6 +465,37 @@ textarea {
 
 
 /* ====================================
+   تخطيط البرنامج - في منتصف الشاشة بنصف العرض
+==================================== */
+
+.main .block-container {
+    width: 50% !important;
+    max-width: 50% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* توسيط اللوجو بشكل صريح */
+[data-testid="stImage"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+[data-testid="stImage"] img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+@media (max-width: 768px) {
+    .main .block-container {
+        width: 94% !important;
+        max-width: 94% !important;
+    }
+}
+
+/* ====================================
    Navigation - بدون Sidebar
 ==================================== */
 
