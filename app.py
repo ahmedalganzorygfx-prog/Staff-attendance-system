@@ -16,7 +16,7 @@ st.set_page_config(
 )
 init_db()
 
-# 2. التنسيق: توسيط العناوين، نقل القائمة لليمين، اتجاه الخط عربي (RTL)
+# 2. التنسيق: توسيط العناصر، نقل القائمة لليمين، واتجاه النصوص RTL
 st.markdown("""
 
 """, unsafe_allow_html=True)
@@ -30,10 +30,10 @@ def is_admin():
 if "admin" not in st.session_state:
     st.session_state.admin = False
 
-# 4. اللوجو والعناوين المنيقة في المنتصف
+# 4. اللوجو والعناوين المنسقة في المنتصف
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 if logo_path.exists():
-    st.image(str(logo_path), width=120)
+    st.image(str(logo_path), width=130)
 
 st.title("منظومة حضور وانصراف العاملين")
 st.subheader(f"{branch_name} – فرع الجيزة")
