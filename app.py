@@ -37,6 +37,7 @@ if "admin" not in st.session_state:
     st.session_state.admin = False
 
 # ==========================================
+# ==========================================
 # 4. رأس الصفحة (الشعار والعناوين)
 # ==========================================
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
@@ -45,4 +46,4 @@ with logo_col:
     if logo_path.exists():
         st.image(str(logo_path), width=95)
 
-st.markdown(f"""
+header_html = f"""
