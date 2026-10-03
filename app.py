@@ -396,90 +396,46 @@ textarea {
 }
 
 /* ====================================
+   قائمة الهاتف - مخفية افتراضيًا
+==================================== */
+
+.st-key-mobile_nav {
+    display: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 !important;
+}
+
+.st-key-mobile_nav [data-testid="stSelectbox"] {
+    width: 100% !important;
+}
+
+.st-key-mobile_nav [data-baseweb="select"] {
+    width: 100% !important;
+}
+
+/* ====================================
    Mobile / Phone layout
 ==================================== */
 
 @media screen and (max-width: 768px) {
 
-    /* ==================================================
-       إصلاح Sidebar على شاشات الهاتف
-       Streamlit يغيّر عرض الـ section نفسه على الموبايل،
-       لذلك يجب تثبيت الـ flex-basis والعرض على العنصر الخارجي
-       وليس على العناصر الداخلية فقط.
-    ================================================== */
-
+    /* في الهاتف نستبدل Sidebar بقائمة Selectbox أعلى الصفحة */
     section[data-testid="stSidebar"],
     [data-testid="stSidebar"] {
-        width: 300px !important;
-        min-width: 300px !important;
-        max-width: 300px !important;
-        flex: 0 0 300px !important;
-        box-sizing: border-box !important;
-        overflow: visible !important;
+        display: none !important;
     }
 
-    section[data-testid="stSidebar"] > div,
-    [data-testid="stSidebar"] > div {
-        width: 300px !important;
-        min-width: 300px !important;
-        max-width: 300px !important;
-        box-sizing: border-box !important;
-        overflow-x: hidden !important;
+    [data-testid="stSidebarCollapsedControl"] {
+        display: none !important;
     }
 
-    /* مساحة محتوى القائمة نفسها */
-    section[data-testid="stSidebar"] [data-testid="stSidebarContent"],
-    [data-testid="stSidebarContent"] {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        padding-left: 14px !important;
-        padding-right: 14px !important;
-        box-sizing: border-box !important;
-        overflow-x: hidden !important;
-    }
-
-    /* لا تسمح لعناصر القائمة بأن يصبح عرضها بضعة بكسلات */
-    section[data-testid="stSidebar"] [data-testid="stVerticalBlock"],
-    section[data-testid="stSidebar"] [data-testid="stElementContainer"],
-    section[data-testid="stSidebar"] [data-testid="stRadio"],
-    section[data-testid="stSidebar"] [data-testid="stRadio"] > div {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    /* عنوان القائمة */
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] p {
-        width: 100% !important;
-        white-space: normal !important;
-        word-break: normal !important;
-        overflow-wrap: normal !important;
-        writing-mode: horizontal-tb !important;
-        text-orientation: mixed !important;
-    }
-
-    /* Radio options: النص أفقي وليس حرفًا تحت حرف */
-    section[data-testid="stSidebar"] [data-testid="stRadio"] label,
-    section[data-testid="stSidebar"] [data-testid="stRadio"] label p,
-    section[data-testid="stSidebar"] [data-testid="stRadio"] label div {
-        width: auto !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
+    .st-key-mobile_nav {
         display: block !important;
-        writing-mode: horizontal-tb !important;
-        text-orientation: mixed !important;
-        direction: rtl !important;
-        text-align: right !important;
-        white-space: normal !important;
-        word-break: normal !important;
-        overflow-wrap: normal !important;
-        line-break: auto !important;
     }
+
+    /* Sidebar مخفي على الهاتف؛ لا نحتاج لتثبيت عرضه */
 
     /* Main page */
     [data-testid="stAppViewContainer"],
@@ -628,15 +584,6 @@ textarea {
         padding-right: 10px !important;
     }
 
-    section[data-testid="stSidebar"],
-    [data-testid="stSidebar"],
-    [data-testid="stSidebar"] > div {
-        min-width: 300px !important;
-        width: 300px !important;
-        max-width: 300px !important;
-        flex-basis: 300px !important;
-    }
-
     [data-testid="stImage"] img {
         width: 105px !important;
         max-width: 105px !important;
@@ -731,7 +678,83 @@ st.markdown(
 
 
 # =========================================================
-# Sidebar
+# التنقل بين صفحات النظام
+# =========================================================
+
+pages = [
+    "تسجيل الحضور والانصراف",
+    "QR Code"
+]
+
+if is_admin():
+    pages += [
+        "لوحة الإدارة",
+        "الموظفون",
+        "التقارير",
+        "سجل الإدارة",
+        "إعدادات الفرع"
+    ]
+else:
+    pages += [
+        "دخول الإدارة"
+    ]
+
+# الصفحة الحالية المشتركة بين قائمة الكمبيوتر وقائمة الهاتف.
+if "current_page" not in st.session_state:
+    st.session_state.current_page = pages[0]
+
+if st.session_state.current_page not in pages:
+    st.session_state.current_page = pages[0]
+
+
+def change_page_from_mobile():
+    """تحديث الصفحة الحالية عند اختيار صفحة من قائمة الهاتف."""
+    selected = st.session_state.get("mobile_page")
+    if selected in pages:
+        st.session_state.current_page = selected
+        st.session_state.sidebar_page = selected
+
+
+def change_page_from_sidebar():
+    """تحديث الصفحة الحالية عند اختيار صفحة من Sidebar الكمبيوتر."""
+    selected = st.session_state.get("sidebar_page")
+    if selected in pages:
+        st.session_state.current_page = selected
+        st.session_state.mobile_page = selected
+
+
+# =========================================================
+# قائمة الهاتف
+# =========================================================
+# يتم إخفاء هذا الـcontainer على الكمبيوتر بواسطة CSS،
+# ويظهر فقط عندما يكون عرض الشاشة 768px أو أقل.
+
+with st.container(key="mobile_nav"):
+    st.selectbox(
+        "📱 الانتقال إلى",
+        pages,
+        index=pages.index(st.session_state.current_page),
+        key="mobile_page",
+        on_change=change_page_from_mobile,
+    )
+
+    if is_admin():
+        if st.button(
+            "🚪 تسجيل خروج الإدارة",
+            use_container_width=True,
+            key="mobile_logout",
+        ):
+            log_admin(
+                "تسجيل خروج",
+                "تسجيل خروج الإدارة من النظام."
+            )
+            st.session_state.admin = False
+            st.session_state.current_page = "تسجيل الحضور والانصراف"
+            st.rerun()
+
+
+# =========================================================
+# Sidebar الكمبيوتر
 # =========================================================
 
 with st.sidebar:
@@ -740,20 +763,16 @@ with st.sidebar:
         "## 🧭 القائمة الرئيسية"
     )
 
-    pages = [
-        "تسجيل الحضور والانصراف",
-        "QR Code"
-    ]
+    st.radio(
+        "الانتقال إلى",
+        pages,
+        index=pages.index(st.session_state.current_page),
+        key="sidebar_page",
+        label_visibility="collapsed",
+        on_change=change_page_from_sidebar,
+    )
 
     if is_admin():
-
-        pages += [
-            "لوحة الإدارة",
-            "الموظفون",
-            "التقارير",
-            "سجل الإدارة",
-            "إعدادات الفرع"
-        ]
 
         st.divider()
 
@@ -768,20 +787,12 @@ with st.sidebar:
             )
 
             st.session_state.admin = False
+            st.session_state.current_page = "تسجيل الحضور والانصراف"
 
             st.rerun()
 
-    else:
 
-        pages += [
-            "دخول الإدارة"
-        ]
-
-    page = st.radio(
-        "الانتقال إلى",
-        pages,
-        label_visibility="collapsed"
-    )
+page = st.session_state.current_page
 
 
 # =========================================================
