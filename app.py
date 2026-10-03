@@ -476,26 +476,20 @@ BASE_DIR = Path(
     __file__
 ).resolve().parent
 
-logo_path = (
-    BASE_DIR
-    / "assets"
-    / "logo.png"
+logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
+
+st.markdown("""
+<div style="text-align:center;">
+""", unsafe_allow_html=True)
+
+st.image(
+    str(logo_path),
+    width=220
 )
 
-
-if logo_path.exists():
-
-    logo_col = st.columns(
-        [1, 1.4, 1]
-    )[1]
-
-    with logo_col:
-
-        st.image(
-            str(logo_path),
-            width=120
-        )
-
+st.markdown("""
+</div>
+""", unsafe_allow_html=True)
 
 # =========================================================
 # Header
