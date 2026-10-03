@@ -1,4 +1,3 @@
-import io
 from datetime import date
 import pandas as pd
 import streamlit as st
@@ -29,13 +28,76 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] { directio
 label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] div { text-align: right !important; direction: rtl !important; }
 input, textarea { direction: rtl !important; text-align: right !important; }
 button { direction: rtl !important; }
-.app-header { text-align:center !important; margin: 0 auto 22px auto; padding: 10px 10px 4px; }
-.app-logo { display:block; width:110px; height:110px; object-fit:contain; margin:0 auto 10px auto; }
-.app-title { text-align:center !important; font-size:1.85rem; font-weight:800; margin:0; line-height:1.4; }
-.app-branch { text-align:center !important; font-size:1.12rem; font-weight:700; margin-top:6px; color:#d9b35f; }
-.app-subtitle { text-align:center !important; color:#aeb6c8; margin-top:5px; font-size:.98rem; }
-.card { border:1px solid rgba(128,128,128,.25); border-radius:14px; padding:18px; margin-bottom:14px; }
-[data-testid="stMetricValue"], [data-testid="stMetricLabel"] { text-align:center !important; }
+
+/* ===== رأس الصفحة: توسيط اللوجو والعناوين داخل منطقة المحتوى ===== */
+.app-header {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin: 0 auto 22px auto !important;
+    padding: 10px 0 4px !important;
+    box-sizing: border-box !important;
+}
+
+.app-logo {
+    display: block !important;
+    width: 110px !important;
+    height: 110px !important;
+    object-fit: contain !important;
+    margin: 0 auto 10px auto !important;
+}
+
+.app-title,
+.app-branch,
+.app-subtitle {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.app-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    line-height: 1.4;
+}
+
+.app-branch {
+    font-size: 1.12rem;
+    font-weight: 700;
+    margin-top: 6px !important;
+    color: #d9b35f;
+}
+
+.app-subtitle {
+    color: #aeb6c8;
+    margin-top: 5px !important;
+    font-size: .98rem;
+}
+
+/* توسيط عناوين الصفحات */
+h1, h2, h3, h4,
+[data-testid="stSubheader"] {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.card {
+    border: 1px solid rgba(128,128,128,.25);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+}
+
+[data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
+    text-align: center !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -48,12 +110,19 @@ if "admin" not in st.session_state:
     st.session_state.admin = False
 
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
-logo_col = st.columns([1, 2, 1])[1]
-with logo_col:
-    st.image(str(logo_path), width=110)
-st.markdown(f'<div class="app-title">نظام الحضور والانصراف</div>', unsafe_allow_html=True)
-st.markdown(f'<div class="app-branch">{branch_name}</div>', unsafe_allow_html=True)
-st.markdown('<div class="app-subtitle">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>', unsafe_allow_html=True)
+
+# رأس الصفحة — اللوجو والعناوين في منتصف منطقة المحتوى
+st.markdown(
+    f'''
+    <div class="app-header">
+        <img class="app-logo" src="{logo_path.as_posix()}">
+        <div class="app-title">نظام الحضور والانصراف</div>
+        <div class="app-branch">{branch_name}</div>
+        <div class="app-subtitle">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>
+    </div>
+    ''',
+    unsafe_allow_html=True
+)
 
 with st.sidebar:
     st.markdown("## القائمة")
