@@ -150,20 +150,11 @@ st.markdown(
    عام
 ==================================== */
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box !important;
-}
-
 html,
 body,
 [data-testid="stAppViewContainer"],
 [data-testid="stApp"] {
     direction: rtl !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
 }
 
 [data-testid="stAppViewContainer"] {
@@ -177,23 +168,20 @@ body,
 }
 
 .main .block-container {
+
     max-width: 900px !important;
+
     width: 100% !important;
+
     margin: 0 auto !important;
+
     padding-top: 1.1rem !important;
+
     padding-bottom: 2rem !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+
     direction: rtl !important;
-    overflow-x: hidden !important;
 }
 
-/* منع الأعمدة من الانكماش لدرجة تكسير الحروف */
-[data-testid="column"],
-.stColumn {
-    min-width: 0 !important;
-    max-width: 100% !important;
-}
 
 /* ====================================
    النصوص
@@ -204,29 +192,31 @@ body,
 .stMarkdown,
 .stText,
 .stCaption {
+
     direction: rtl !important;
+
     text-align: right !important;
-    overflow-wrap: break-word !important;
-    word-break: normal !important;
-    white-space: normal !important;
 }
+
 
 h1,
 h2,
-h3,
-p {
+h3 {
+
     direction: rtl !important;
-    overflow-wrap: break-word !important;
-    word-break: normal !important;
+
 }
+
 
 label,
 [data-testid="stWidgetLabel"] p,
 [data-testid="stWidgetLabel"] div {
+
     text-align: right !important;
+
     direction: rtl !important;
-    white-space: normal !important;
 }
+
 
 /* ====================================
    Inputs
@@ -234,17 +224,21 @@ label,
 
 input,
 textarea {
+
     direction: rtl !important;
+
     text-align: right !important;
-    max-width: 100% !important;
 }
+
 
 /* ====================================
    Sidebar
 ==================================== */
 
 [data-testid="stSidebar"] {
+
     direction: rtl !important;
+
     background:
         linear-gradient(
             180deg,
@@ -253,113 +247,144 @@ textarea {
         );
 }
 
+
 [data-testid="stSidebar"] * {
+
     direction: rtl !important;
+
     text-align: right !important;
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
 }
 
-/* ====================================
-   الشعار
-==================================== */
-
-[data-testid="stImage"] {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-}
-
-[data-testid="stImage"] img {
-    max-width: min(160px, 55vw) !important;
-    height: auto !important;
-    object-fit: contain !important;
-}
 
 /* ====================================
    العنوان
 ==================================== */
 
 .app-title {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
+
     text-align: center !important;
+
     color: #ffffff;
+
     font-size: 2rem;
+
     font-weight: 900;
-    line-height: 1.45;
+
+    line-height: 1.5;
+
     margin-top: 4px;
-    padding: 0 4px;
-    overflow-wrap: break-word !important;
-    word-break: normal !important;
-    white-space: normal !important;
 }
+
 
 .app-branch {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
+
     text-align: center !important;
+
     color: #d8b35e;
+
     font-size: 1.15rem;
+
     font-weight: 800;
-    line-height: 1.5;
+
     margin-top: 7px;
-    padding: 0 4px;
-    overflow-wrap: break-word !important;
-    word-break: normal !important;
-    white-space: normal !important;
 }
 
+
 .app-subtitle {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
+
     text-align: center !important;
+
     color: #aebbd0;
+
     font-size: 0.98rem;
-    line-height: 1.7;
+
     margin-top: 5px;
+
     margin-bottom: 18px;
-    padding: 0 4px;
-    overflow-wrap: break-word !important;
-    word-break: normal !important;
-    white-space: normal !important;
 }
+
 
 /* ====================================
    Cards
 ==================================== */
 
 .custom-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    border: 1px solid rgba(216, 179, 94, 0.25);
-    background: rgba(13, 31, 61, 0.7);
-    border-radius: 18px;
-    padding: 18px;
-    margin-bottom: 16px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+
+    border:
+        1px solid
+        rgba(
+            216,
+            179,
+            94,
+            0.25
+        );
+
+    background:
+        rgba(
+            13,
+            31,
+            61,
+            0.7
+        );
+
+    border-radius:
+        18px;
+
+    padding:
+        18px;
+
+    margin-bottom:
+        16px;
+
+    box-shadow:
+        0px 8px 24px
+        rgba(
+            0,
+            0,
+            0,
+            0.12
+        );
 }
+
 
 /* ====================================
    Metrics
 ==================================== */
 
 [data-testid="stMetric"] {
-    background: rgba(14, 36, 72, .75);
-    border: 1px solid rgba(216, 179, 94, .18);
-    padding: 12px;
-    border-radius: 14px;
-    min-width: 0 !important;
+
+    background:
+        rgba(
+            14,
+            36,
+            72,
+            .75
+        );
+
+    border:
+        1px solid
+        rgba(
+            216,
+            179,
+            94,
+            .18
+        );
+
+    padding:
+        12px;
+
+    border-radius:
+        14px;
 }
+
 
 [data-testid="stMetricValue"],
 [data-testid="stMetricLabel"] {
-    text-align: center !important;
+
+    text-align:
+        center !important;
 }
+
 
 /* ====================================
    Buttons
@@ -367,241 +392,116 @@ textarea {
 
 .stButton button,
 .stDownloadButton button {
-    width: 100% !important;
-    max-width: 100% !important;
-    border-radius: 10px !important;
-    font-weight: 700 !important;
-    white-space: normal !important;
-    min-height: 44px !important;
+
+    border-radius:
+        10px !important;
+
+    font-weight:
+        700 !important;
 }
+
 
 /* ====================================
    Dataframe
 ==================================== */
 
 [data-testid="stDataFrame"] {
-    direction: rtl !important;
-    max-width: 100% !important;
+
+    direction:
+        rtl !important;
 }
+
 
 /* ====================================
    Footer
 ==================================== */
 
 .footer-text {
-    text-align: center !important;
-    color: #d8b35e;
-    font-size: .88rem;
-    padding: 12px;
+
+    text-align:
+        center !important;
+
+    color:
+        #d8b35e;
+
+    font-size:
+        .88rem;
+
+    padding:
+        12px;
 }
 
+
 /* ====================================
-   قائمة الهاتف - مخفية افتراضيًا
+   موبايل
 ==================================== */
 
-.st-key-mobile_nav {
+@media (
+    max-width: 768px
+) {
+
+    .app-title {
+
+        font-size:
+            1.55rem;
+    }
+
+    .app-branch {
+
+        font-size:
+            1rem;
+    }
+
+    .main .block-container {
+
+        padding-left:
+            .7rem !important;
+
+        padding-right:
+            .7rem !important;
+    }
+}
+
+
+
+/* ====================================
+   Navigation - بدون Sidebar
+==================================== */
+
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"] {
     display: none !important;
+}
+
+.top-nav-title {
+    text-align: right;
+    direction: rtl;
+    color: #d8b35e;
+    font-size: 1rem;
+    font-weight: 800;
+    margin: 8px 0 6px;
+}
+
+[data-testid="stSelectbox"] {
     width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 0 14px 0 !important;
-    padding: 0 !important;
 }
 
-.st-key-mobile_nav [data-testid="stSelectbox"] {
+[data-testid="stSelectbox"] > div {
     width: 100% !important;
 }
 
-.st-key-mobile_nav [data-baseweb="select"] {
-    width: 100% !important;
+[data-testid="stSelectbox"] [role="combobox"] {
+    direction: rtl !important;
+    text-align: right !important;
+    min-height: 46px !important;
+    border-radius: 12px !important;
 }
 
-/* ====================================
-   Mobile / Phone layout
-==================================== */
-
-@media screen and (max-width: 768px) {
-
-    /* في الهاتف نستبدل Sidebar بقائمة Selectbox أعلى الصفحة */
-    section[data-testid="stSidebar"],
-    [data-testid="stSidebar"] {
-        display: none !important;
-    }
-
-    [data-testid="stSidebarCollapsedControl"] {
-        display: none !important;
-    }
-
-    .st-key-mobile_nav {
-        display: block !important;
-    }
-
-    /* Sidebar مخفي على الهاتف؛ لا نحتاج لتثبيت عرضه */
-
-    /* Main page */
-    [data-testid="stAppViewContainer"],
-    [data-testid="stAppViewContainer"] .main,
-    .main,
-    .main .block-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    .main .block-container {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-        padding-top: 8px !important;
-        padding-bottom: 24px !important;
-        margin: 0 !important;
-    }
-
-    /* Logo */
-    [data-testid="stImage"] {
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        margin: 0 auto 8px auto !important;
-    }
-
-    [data-testid="stImage"] img {
-        width: 120px !important;
-        max-width: 120px !important;
-        height: auto !important;
-    }
-
-    /* Header text */
-    .app-title,
-    .app-branch,
-    .app-subtitle {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: 4px !important;
-        padding-right: 4px !important;
-        text-align: center !important;
-        white-space: normal !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-    }
-
-    .app-title {
-        font-size: 25px !important;
-        line-height: 1.45 !important;
-        margin-top: 4px !important;
-    }
-
-    .app-branch {
-        font-size: 16px !important;
-        line-height: 1.55 !important;
-        margin-top: 6px !important;
-    }
-
-    .app-subtitle {
-        font-size: 14px !important;
-        line-height: 1.7 !important;
-        margin-top: 4px !important;
-        margin-bottom: 14px !important;
-    }
-
-    /* Prevent every Streamlit widget from becoming narrower than its text */
-    [data-testid="stVerticalBlock"],
-    [data-testid="stHorizontalBlock"],
-    [data-testid="column"],
-    .stColumn,
-    [data-testid="stForm"],
-    [data-testid="stElementContainer"] {
-        min-width: 0 !important;
-        max-width: 100% !important;
-    }
-
-    /* Attendance title */
-    [data-testid="stSubheader"] {
-        width: 100% !important;
-        text-align: right !important;
-        white-space: normal !important;
-        line-height: 1.45 !important;
-    }
-
-    /* Radio: two options in one normal row */
-    [data-testid="stRadio"] > div {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 10px 22px !important;
-    }
-
-    [data-testid="stRadio"] label {
-        width: auto !important;
-        min-width: 80px !important;
-        max-width: 100% !important;
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-    }
-
-    /* Inputs and buttons */
-    input, textarea, select,
-    [data-baseweb="input"],
-    [data-baseweb="select"] {
-        max-width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    .stButton,
-    .stButton > button,
-    .stDownloadButton,
-    .stDownloadButton > button {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .stButton > button,
-    .stDownloadButton > button {
-        min-height: 46px !important;
-        font-size: 15px !important;
-        padding: 8px 10px !important;
-    }
-
-    /* Cards */
-    .custom-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 14px !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
+[data-testid="stSelectbox"] [role="option"] {
+    direction: rtl !important;
+    text-align: right !important;
+    white-space: normal !important;
 }
-
-@media screen and (max-width: 420px) {
-
-    .main .block-container {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-
-    [data-testid="stImage"] img {
-        width: 105px !important;
-        max-width: 105px !important;
-    }
-
-    .app-title {
-        font-size: 22px !important;
-    }
-
-    .app-branch {
-        font-size: 15px !important;
-    }
-
-    .app-subtitle {
-        font-size: 13px !important;
-    }
-}
-
 </style>
 """,
     unsafe_allow_html=True
@@ -678,7 +578,7 @@ st.markdown(
 
 
 # =========================================================
-# التنقل بين صفحات النظام
+# Navigation
 # =========================================================
 
 pages = [
@@ -695,104 +595,29 @@ if is_admin():
         "إعدادات الفرع"
     ]
 else:
-    pages += [
-        "دخول الإدارة"
-    ]
+    pages += ["دخول الإدارة"]
 
-# الصفحة الحالية المشتركة بين قائمة الكمبيوتر وقائمة الهاتف.
-if "current_page" not in st.session_state:
-    st.session_state.current_page = pages[0]
+# قائمة التنقل الرئيسية داخل الصفحة — بدون Sidebar
+st.markdown(
+    "<div class=\"top-nav-title\">🧭 القائمة الرئيسية</div>",
+    unsafe_allow_html=True
+)
 
-if st.session_state.current_page not in pages:
-    st.session_state.current_page = pages[0]
+page = st.selectbox(
+    "الانتقال إلى",
+    pages,
+    label_visibility="collapsed",
+    key="top_navigation"
+)
 
-
-def change_page_from_mobile():
-    """تحديث الصفحة الحالية عند اختيار صفحة من قائمة الهاتف."""
-    selected = st.session_state.get("mobile_page")
-    if selected in pages:
-        st.session_state.current_page = selected
-        st.session_state.sidebar_page = selected
-
-
-def change_page_from_sidebar():
-    """تحديث الصفحة الحالية عند اختيار صفحة من Sidebar الكمبيوتر."""
-    selected = st.session_state.get("sidebar_page")
-    if selected in pages:
-        st.session_state.current_page = selected
-        st.session_state.mobile_page = selected
-
-
-# =========================================================
-# قائمة الهاتف
-# =========================================================
-# يتم إخفاء هذا الـcontainer على الكمبيوتر بواسطة CSS،
-# ويظهر فقط عندما يكون عرض الشاشة 768px أو أقل.
-
-with st.container(key="mobile_nav"):
-    st.selectbox(
-        "📱 الانتقال إلى",
-        pages,
-        index=pages.index(st.session_state.current_page),
-        key="mobile_page",
-        on_change=change_page_from_mobile,
-    )
-
-    if is_admin():
-        if st.button(
-            "🚪 تسجيل خروج الإدارة",
-            use_container_width=True,
-            key="mobile_logout",
-        ):
-            log_admin(
-                "تسجيل خروج",
-                "تسجيل خروج الإدارة من النظام."
-            )
-            st.session_state.admin = False
-            st.session_state.current_page = "تسجيل الحضور والانصراف"
-            st.rerun()
-
-
-# =========================================================
-# Sidebar الكمبيوتر
-# =========================================================
-
-with st.sidebar:
-
-    st.markdown(
-        "## 🧭 القائمة الرئيسية"
-    )
-
-    st.radio(
-        "الانتقال إلى",
-        pages,
-        index=pages.index(st.session_state.current_page),
-        key="sidebar_page",
-        label_visibility="collapsed",
-        on_change=change_page_from_sidebar,
-    )
-
-    if is_admin():
-
-        st.divider()
-
-        if st.button(
-            "🚪 تسجيل خروج الإدارة",
-            use_container_width=True
-        ):
-
-            log_admin(
-                "تسجيل خروج",
-                "تسجيل خروج الإدارة من النظام."
-            )
-
-            st.session_state.admin = False
-            st.session_state.current_page = "تسجيل الحضور والانصراف"
-
-            st.rerun()
-
-
-page = st.session_state.current_page
+if is_admin():
+    if st.button("🚪 تسجيل خروج الإدارة", use_container_width=True):
+        log_admin(
+            "تسجيل خروج",
+            "تسجيل خروج الإدارة من النظام."
+        )
+        st.session_state.admin = False
+        st.rerun()
 
 
 # =========================================================
