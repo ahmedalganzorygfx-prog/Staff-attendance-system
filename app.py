@@ -493,7 +493,7 @@ if logo_path.exists():
 
         st.image(
             str(logo_path),
-            width=120
+            width=200
         )
 
 
