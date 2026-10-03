@@ -396,88 +396,197 @@ textarea {
 }
 
 /* ====================================
-   موبايل
+   Mobile / Phone layout
 ==================================== */
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 
+    /* Keep the Streamlit sidebar from collapsing into a thin strip */
+    [data-testid="stSidebar"] {
+        min-width: 280px !important;
+        width: 280px !important;
+        max-width: 280px !important;
+    }
+
+    [data-testid="stSidebar"] > div {
+        width: 280px !important;
+        max-width: 280px !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Main page */
+    [data-testid="stAppViewContainer"],
+    [data-testid="stAppViewContainer"] .main,
+    .main,
     .main .block-container {
         width: 100% !important;
         max-width: 100% !important;
-        padding-left: .85rem !important;
-        padding-right: .85rem !important;
-        padding-top: .7rem !important;
-    }
-
-    .app-title {
-        font-size: clamp(1.35rem, 6.2vw, 1.65rem) !important;
-        line-height: 1.5 !important;
-        margin-top: 2px !important;
-    }
-
-    .app-branch {
-        font-size: clamp(.9rem, 4.2vw, 1.05rem) !important;
-        line-height: 1.55 !important;
-    }
-
-    .app-subtitle {
-        font-size: .88rem !important;
-        line-height: 1.7 !important;
-        margin-bottom: 14px !important;
-    }
-
-    [data-testid="stImage"] img {
-        max-width: 135px !important;
-    }
-
-    [data-testid="stRadio"] > div {
-        flex-wrap: wrap !important;
-        gap: .4rem !important;
-    }
-
-    [data-testid="stRadio"] label {
-        white-space: normal !important;
         min-width: 0 !important;
     }
 
-    .stButton button,
-    .stDownloadButton button {
-        font-size: .95rem !important;
-        padding: .65rem .75rem !important;
-    }
-
-    [data-testid="stAlert"] {
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-wrap: break-word !important;
-    }
-}
-
-/* ====================================
-   موبايلات صغيرة جدًا
-==================================== */
-
-@media (max-width: 420px) {
-
     .main .block-container {
-        padding-left: .65rem !important;
-        padding-right: .65rem !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        padding-top: 8px !important;
+        padding-bottom: 24px !important;
+        margin: 0 !important;
     }
 
-    .app-title {
-        font-size: 1.28rem !important;
-    }
-
-    .app-branch {
-        font-size: .88rem !important;
-    }
-
-    .app-subtitle {
-        font-size: .82rem !important;
+    /* Logo */
+    [data-testid="stImage"] {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto 8px auto !important;
     }
 
     [data-testid="stImage"] img {
+        width: 120px !important;
         max-width: 120px !important;
+        height: auto !important;
+    }
+
+    /* Header text */
+    .app-title,
+    .app-branch,
+    .app-subtitle {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        text-align: center !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+    }
+
+    .app-title {
+        font-size: 25px !important;
+        line-height: 1.45 !important;
+        margin-top: 4px !important;
+    }
+
+    .app-branch {
+        font-size: 16px !important;
+        line-height: 1.55 !important;
+        margin-top: 6px !important;
+    }
+
+    .app-subtitle {
+        font-size: 14px !important;
+        line-height: 1.7 !important;
+        margin-top: 4px !important;
+        margin-bottom: 14px !important;
+    }
+
+    /* Prevent every Streamlit widget from becoming narrower than its text */
+    [data-testid="stVerticalBlock"],
+    [data-testid="stHorizontalBlock"],
+    [data-testid="column"],
+    .stColumn,
+    [data-testid="stForm"],
+    [data-testid="stElementContainer"] {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    /* Attendance title */
+    [data-testid="stSubheader"] {
+        width: 100% !important;
+        text-align: right !important;
+        white-space: normal !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Radio: two options in one normal row */
+    [data-testid="stRadio"] > div {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 10px 22px !important;
+    }
+
+    [data-testid="stRadio"] label {
+        width: auto !important;
+        min-width: 80px !important;
+        max-width: 100% !important;
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+    }
+
+    /* Inputs and buttons */
+    input, textarea, select,
+    [data-baseweb="input"],
+    [data-baseweb="select"] {
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .stButton,
+    .stButton > button,
+    .stDownloadButton,
+    .stDownloadButton > button {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .stButton > button,
+    .stDownloadButton > button {
+        min-height: 46px !important;
+        font-size: 15px !important;
+        padding: 8px 10px !important;
+    }
+
+    /* Cards */
+    .custom-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+@media screen and (max-width: 420px) {
+
+    .main .block-container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    [data-testid="stSidebar"],
+    [data-testid="stSidebar"] > div {
+        min-width: 270px !important;
+        width: 270px !important;
+        max-width: 270px !important;
+    }
+
+    [data-testid="stImage"] img {
+        width: 105px !important;
+        max-width: 105px !important;
+    }
+
+    .app-title {
+        font-size: 22px !important;
+    }
+
+    .app-branch {
+        font-size: 15px !important;
+    }
+
+    .app-subtitle {
+        font-size: 13px !important;
     }
 }
 
