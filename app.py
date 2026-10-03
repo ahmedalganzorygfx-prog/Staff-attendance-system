@@ -157,53 +157,29 @@ body,
     direction: rtl !important;
 }
 
-/* ====================================
-   فصل ألوان الجوانب عن البرنامج
-==================================== */
-
-html,
-body,
-[data-testid="stApp"],
 [data-testid="stAppViewContainer"] {
-    background: #e9edf3 !important;
-}
-
-[data-testid="stAppViewContainer"] .main {
-    position: relative !important;
-    min-height: 100vh !important;
-    background: transparent !important;
-}
-
-/* لوحة البرنامج الداكنة في منتصف الشاشة */
-[data-testid="stAppViewContainer"] .main::before {
-    content: "" !important;
-    position: fixed !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 25% !important;
-    width: 50% !important;
-    background: radial-gradient(
-        circle at top,
-        #17345f 0%,
-        #0b1d38 42%,
-        #06101f 100%
-    ) !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.16) !important;
+    background:
+        radial-gradient(
+            circle at top,
+            #13264d 0%,
+            #081426 45%,
+            #050c18 100%
+        );
 }
 
 .main .block-container {
-    position: relative !important;
-    z-index: 1 !important;
-    max-width: 50% !important;
-    width: 50% !important;
+
+    max-width: 900px !important;
+
+    width: 100% !important;
+
     margin: 0 auto !important;
-    padding: 1.1rem 2rem 2rem 2rem !important;
+
+    padding-top: 1.1rem !important;
+
+    padding-bottom: 2rem !important;
+
     direction: rtl !important;
-    background: transparent !important;
-    min-height: 100vh !important;
-    box-sizing: border-box !important;
 }
 
 
@@ -513,17 +489,9 @@ textarea {
 }
 
 @media (max-width: 768px) {
-    [data-testid="stAppViewContainer"] .main::before {
-        left: 3% !important;
-        width: 94% !important;
-    }
-
     .main .block-container {
         width: 94% !important;
         max-width: 94% !important;
-        padding-left: .9rem !important;
-        padding-right: .9rem !important;
-        border-radius: 0 !important;
     }
 }
 
