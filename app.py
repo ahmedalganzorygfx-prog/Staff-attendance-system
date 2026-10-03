@@ -16,7 +16,7 @@ st.set_page_config(
 )
 init_db()
 
-# 2. التنسيق والتوسيط عبر CSS (بدون نصوص داخلية معقدة)
+# 2. التنسيق والتوسيط عبر CSS
 st.markdown("""
 
 """, unsafe_allow_html=True)
@@ -30,7 +30,7 @@ def is_admin():
 if "admin" not in st.session_state:
     st.session_state.admin = False
 
-# 4. الشعار الهيدر (عبر أدوات Streamlit الرسمية لتفادي أخطاء الأسطر)
+# 4. الشعار والهيدر
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 logo_col = st.columns([1, 1, 1])[1]
 with logo_col:
@@ -232,4 +232,4 @@ elif page == "إعدادات الفرع":
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
 # 7. البطاقات الملونة والتذييل
-st.markdown(
+features_html = """
