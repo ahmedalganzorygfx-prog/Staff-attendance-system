@@ -18,7 +18,9 @@ init_db()
 
 # 2. التنسيق والتوسيط عبر CSS
 st.markdown(
-    "",
+    """
+    
+    """,
     unsafe_allow_html=True
 )
 
@@ -234,3 +236,4 @@ elif page == "إعدادات الفرع":
 
 # 7. البطاقات الملونة والتذييل
 st.markdown(
+    """
