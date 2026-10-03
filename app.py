@@ -232,4 +232,4 @@ elif page == "إعدادات الفرع":
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
 # 7. البطاقات الملونة والتذييل
-st.markdown("""
+st.markdown(
