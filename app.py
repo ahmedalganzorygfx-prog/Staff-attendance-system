@@ -226,6 +226,19 @@ section[data-testid="stSidebar"] {
     background: linear-gradient(180deg, #061329 0%, #0a2041 55%, #07162c 100%) !important;
     border-left: 1px solid rgba(216, 179, 94, .22) !important;
     border-right: 0 !important;
+    width: 360px !important;
+    min-width: 360px !important;
+    max-width: 360px !important;
+}
+
+/* توسيع مساحة Sidebar الداخلية ومنع قص النصوص العربية */
+section[data-testid="stSidebar"] > div:first-child {
+    width: 360px !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 section[data-testid="stSidebar"] > div {
@@ -442,6 +455,16 @@ section[data-testid="stSidebar"] .stButton button {
 
     .app-subtitle {
         font-size: .88rem !important;
+    }
+
+    section[data-testid="stSidebar"] {
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
+    }
+
+    section[data-testid="stSidebar"] > div:first-child {
+        width: 300px !important;
     }
 
     section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
