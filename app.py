@@ -472,70 +472,31 @@ textarea {
 # Logo
 # =========================================================
 
-logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
+BASE_DIR = Path(
+    __file__
+).resolve().parent
 
-st.markdown("""
-<style>
-
-.logo-container{
-    text-align:center;
-    margin-top:10px;
-    margin-bottom:15px;
-}
-
-.logo-container img{
-    width:240px !important;
-    max-width:85%;
-    height:auto;
-    border-radius:50%;
-}
-
-.main-title{
-    text-align:center;
-    color:white;
-    font-size:42px;
-    font-weight:800;
-    margin-top:10px;
-    margin-bottom:5px;
-}
-
-.branch-title{
-    text-align:center;
-    color:#d9b35f;
-    font-size:30px;
-    font-weight:700;
-    margin-bottom:15px;
-}
-
-.sub-title{
-    text-align:center;
-    color:#c8d2e0;
-    font-size:18px;
-    margin-bottom:25px;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-col1, col2, col3 = st.columns([1,3,1])
-
-with col2:
-    st.image(str(logo_path), width=240)
-
-st.markdown(
-    '<div class="main-title">منظومة حضور وانصراف العاملين</div>',
-    unsafe_allow_html=True
+logo_path = (
+    BASE_DIR
+    / "assets"
+    / "logo.png"
 )
 
-st.markdown(
-    '<div class="branch-title">الأكاديمية المهنية للمعلمين<br>فرع الجيزة</div>',
-    unsafe_allow_html=True
-)
 
-st.markdown(
-    '<div class="sub-title">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>',
-    unsafe_allow_html=True
-)
+if logo_path.exists():
+
+    logo_col = st.columns(
+        [1, 1.4, 1]
+    )[1]
+
+    with logo_col:
+
+        st.image(
+            str(logo_path),
+            width=120
+        )
+
+
 # =========================================================
 # Header
 # =========================================================
