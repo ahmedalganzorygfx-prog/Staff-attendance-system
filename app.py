@@ -263,22 +263,11 @@ section[data-testid="stSidebar"] p {
 }
 
 section[data-testid="stSidebar"] [data-testid="stImage"] {
-    display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin: 0 auto .85rem auto !important;
-    text-align: center !important;
-}
-
-section[data-testid="stSidebar"] [data-testid="stImage"] > div {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
+    margin: 0 auto .7rem auto !important;
 }
 
 section[data-testid="stSidebar"] [data-testid="stImage"] img {
-    display: block !important;
     margin: 0 auto !important;
     border-radius: 50% !important;
 }
@@ -383,32 +372,10 @@ section[data-testid="stSidebar"] .stButton button {
     width: 100% !important;
 }
 
-[data-testid="stImage"] {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    text-align: center !important;
-}
-
-[data-testid="stImage"] > div {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-}
-
 [data-testid="stImage"] img {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important;
-}
-
-.main-logo-wrap {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
 }
 
 /* =========================================================
@@ -529,23 +496,15 @@ logo_path = (
 
 if logo_path.exists():
 
-    # توسيط اللوجو في الصفحة الرئيسية بشكل صريح
-    logo_col_left, logo_col_center, logo_col_right = st.columns(
-        [1, 1, 1]
-    )
+    logo_col = st.columns(
+        [1, 1.4, 1]
+    )[1]
 
-    with logo_col_center:
-        st.markdown(
-            '<div class="main-logo-wrap">',
-            unsafe_allow_html=True
-        )
+    with logo_col:
+
         st.image(
             str(logo_path),
             width=160
-        )
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
         )
 
 
@@ -626,16 +585,10 @@ else:
 with st.sidebar:
 
     if logo_path.exists():
-        # توسيط اللوجو داخل الـ Sidebar باستخدام عمود مركزي
-        side_logo_left, side_logo_center, side_logo_right = st.columns(
-            [1, 1.15, 1]
+        st.image(
+            str(logo_path),
+            width=125
         )
-
-        with side_logo_center:
-            st.image(
-                str(logo_path),
-                width=125
-            )
 
     st.markdown(
         """
