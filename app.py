@@ -41,9 +41,9 @@ from utils import (
 # =========================================================
 
 st.set_page_config(
-    page_title="نظام الحضور والانصراف",
+    page_title="منظومة الحضور والانصراف - فرع الجيزة",
     page_icon="assets/logo.png",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="expanded"
 )
 
@@ -139,343 +139,220 @@ def is_admin():
 
 
 # =========================================================
-# CSS
+# CSS - RTL + Sidebar + Responsive
 # =========================================================
 
 st.markdown(
     """
 <style>
 
-/* ====================================
-   عام
-==================================== */
+/* =========================================================
+   RTL عام
+   ========================================================= */
 
 html,
 body,
+[data-testid="stApp"],
 [data-testid="stAppViewContainer"],
-[data-testid="stApp"] {
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stMain"] {
     direction: rtl !important;
 }
 
 [data-testid="stAppViewContainer"] {
     background:
-        radial-gradient(
-            circle at top,
-            #13264d 0%,
-            #081426 45%,
-            #050c18 100%
-        );
+        radial-gradient(circle at top right, #17335f 0%, #0a1830 42%, #050b16 100%);
+    min-height: 100vh;
 }
 
-.main .block-container {
-
-    max-width: 900px !important;
-
-    width: 100% !important;
-
-    margin: 0 auto !important;
-
-    padding-top: 1.1rem !important;
-
-    padding-bottom: 2rem !important;
-
+[data-testid="stMain"] {
     direction: rtl !important;
 }
 
+.main .block-container {
+    direction: rtl !important;
+    width: 100% !important;
+    max-width: 1080px !important;
+    margin: 0 auto !important;
+    padding-top: 1.35rem !important;
+    padding-bottom: 2.2rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
 
-/* ====================================
-   النصوص
-==================================== */
+/* =========================================================
+   النصوص والعناصر
+   ========================================================= */
 
 [data-testid="stMarkdownContainer"],
 [data-testid="stWidgetLabel"],
+[data-testid="stWidgetLabel"] p,
 .stMarkdown,
 .stText,
-.stCaption {
-
-    direction: rtl !important;
-
-    text-align: right !important;
-}
-
-
+.stCaption,
+label,
+p,
 h1,
 h2,
-h3 {
-
+h3,
+h4,
+h5,
+h6 {
     direction: rtl !important;
-
-}
-
-
-label,
-[data-testid="stWidgetLabel"] p,
-[data-testid="stWidgetLabel"] div {
-
     text-align: right !important;
-
-    direction: rtl !important;
 }
-
-
-/* ====================================
-   Inputs
-==================================== */
 
 input,
-textarea {
-
+textarea,
+select,
+[data-baseweb="input"],
+[data-baseweb="select"] {
     direction: rtl !important;
-
     text-align: right !important;
 }
 
-
-/* ====================================
-   Sidebar
-==================================== */
-
-[data-testid="stSidebar"] {
-
+[data-baseweb="select"] > div {
     direction: rtl !important;
-
-    background:
-        linear-gradient(
-            180deg,
-            #07152a 0%,
-            #0a1e3d 100%
-        );
-}
-
-
-[data-testid="stSidebar"] * {
-
-    direction: rtl !important;
-
     text-align: right !important;
 }
 
+/* =========================================================
+   Sidebar - يمين الشاشة + RTL
+   ========================================================= */
 
-/* ====================================
-   العنوان
-==================================== */
+section[data-testid="stSidebar"] {
+    direction: rtl !important;
+    background: linear-gradient(180deg, #061329 0%, #0a2041 55%, #07162c 100%) !important;
+    border-left: 1px solid rgba(216, 179, 94, .22) !important;
+    border-right: 0 !important;
+}
+
+section[data-testid="stSidebar"] > div {
+    direction: rtl !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    direction: rtl !important;
+    text-align: right !important;
+    padding: 1rem .9rem 1.5rem !important;
+}
+
+section[data-testid="stSidebar"] * {
+    direction: rtl !important;
+}
+
+section[data-testid="stSidebar"] .stMarkdown,
+section[data-testid="stSidebar"] .stText,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p {
+    text-align: right !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stImage"] {
+    justify-content: center !important;
+    margin: 0 auto .7rem auto !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stImage"] img {
+    margin: 0 auto !important;
+    border-radius: 50% !important;
+}
+
+/* عنوان Sidebar */
+.sidebar-brand {
+    text-align: center !important;
+    direction: rtl !important;
+    color: #ffffff !important;
+    font-size: 1.08rem !important;
+    font-weight: 900 !important;
+    line-height: 1.65 !important;
+    margin: .2rem 0 .15rem !important;
+}
+
+.sidebar-branch {
+    text-align: center !important;
+    direction: rtl !important;
+    color: #d8b35e !important;
+    font-size: .9rem !important;
+    font-weight: 800 !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1rem !important;
+}
+
+.sidebar-section {
+    color: #d8b35e !important;
+    font-size: .85rem !important;
+    font-weight: 800 !important;
+    border-bottom: 1px solid rgba(216,179,94,.22);
+    padding-bottom: .45rem;
+    margin: .7rem 0 .65rem;
+}
+
+.sidebar-status {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(216,179,94,.16);
+    border-radius: 12px;
+    padding: .65rem .75rem;
+    color: #dce6f4;
+    font-size: .8rem;
+    line-height: 1.6;
+    margin-top: .8rem;
+    text-align: right !important;
+}
+
+/* عناصر التنقل */
+section[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    width: 100% !important;
+    border-radius: 11px !important;
+    padding: .45rem .6rem !important;
+    margin: .12rem 0 !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stRadio"] label p {
+    font-weight: 700 !important;
+    text-align: right !important;
+}
+
+section[data-testid="stSidebar"] .stButton button {
+    width: 100% !important;
+}
+
+/* =========================================================
+   Header الرئيسي
+   ========================================================= */
+
+.app-header {
+    text-align: center !important;
+    direction: rtl !important;
+    padding: .15rem .5rem 1rem !important;
+}
 
 .app-title {
-
     text-align: center !important;
-
-    color: #ffffff;
-
-    font-size: 2rem;
-
-    font-weight: 900;
-
-    line-height: 1.5;
-
-    margin-top: 4px;
+    color: #ffffff !important;
+    font-size: 2.05rem !important;
+    font-weight: 900 !important;
+    line-height: 1.5 !important;
+    margin-top: 4px !important;
 }
-
 
 .app-branch {
-
     text-align: center !important;
-
-    color: #d8b35e;
-
-    font-size: 1.15rem;
-
-    font-weight: 800;
-
-    margin-top: 7px;
+    color: #d8b35e !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    margin-top: 6px !important;
 }
-
 
 .app-subtitle {
-
     text-align: center !important;
-
-    color: #aebbd0;
-
-    font-size: 0.98rem;
-
-    margin-top: 5px;
-
-    margin-bottom: 18px;
+    color: #b7c5d9 !important;
+    font-size: .96rem !important;
+    margin-top: 5px !important;
+    margin-bottom: 14px !important;
 }
 
-
-/* ====================================
-   Cards
-==================================== */
-
-.custom-card {
-
-    border:
-        1px solid
-        rgba(
-            216,
-            179,
-            94,
-            0.25
-        );
-
-    background:
-        rgba(
-            13,
-            31,
-            61,
-            0.7
-        );
-
-    border-radius:
-        18px;
-
-    padding:
-        18px;
-
-    margin-bottom:
-        16px;
-
-    box-shadow:
-        0px 8px 24px
-        rgba(
-            0,
-            0,
-            0,
-            0.12
-        );
-}
-
-
-/* ====================================
-   Metrics
-==================================== */
-
-[data-testid="stMetric"] {
-
-    background:
-        rgba(
-            14,
-            36,
-            72,
-            .75
-        );
-
-    border:
-        1px solid
-        rgba(
-            216,
-            179,
-            94,
-            .18
-        );
-
-    padding:
-        12px;
-
-    border-radius:
-        14px;
-}
-
-
-[data-testid="stMetricValue"],
-[data-testid="stMetricLabel"] {
-
-    text-align:
-        center !important;
-}
-
-
-/* ====================================
-   Buttons
-==================================== */
-
-.stButton button,
-.stDownloadButton button {
-
-    border-radius:
-        10px !important;
-
-    font-weight:
-        700 !important;
-}
-
-
-/* ====================================
-   Dataframe
-==================================== */
-
-[data-testid="stDataFrame"] {
-
-    direction:
-        rtl !important;
-}
-
-
-/* ====================================
-   Footer
-==================================== */
-
-.footer-text {
-
-    text-align:
-        center !important;
-
-    color:
-        #d8b35e;
-
-    font-size:
-        .88rem;
-
-    padding:
-        12px;
-}
-
-
-/* ====================================
-   موبايل
-==================================== */
-
-@media (
-    max-width: 768px
-) {
-
-    .app-title {
-
-        font-size:
-            1.55rem;
-    }
-
-    .app-branch {
-
-        font-size:
-            1rem;
-    }
-
-    .main .block-container {
-
-        padding-left:
-            .7rem !important;
-
-        padding-right:
-            .7rem !important;
-    }
-}
-
-
-
-/* ====================================
-   تخطيط البرنامج - في منتصف الشاشة بنصف العرض
-==================================== */
-
-.main .block-container {
-    width: 50% !important;
-    max-width: 50% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-/* توسيط اللوجو بشكل صريح */
 [data-testid="stImage"] {
     display: flex !important;
     justify-content: center !important;
@@ -488,51 +365,91 @@ textarea {
     margin-right: auto !important;
 }
 
+/* =========================================================
+   Cards / Metrics
+   ========================================================= */
+
+.custom-card {
+    border: 1px solid rgba(216,179,94,.25);
+    background: rgba(13,31,61,.72);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.14);
+}
+
+[data-testid="stMetric"] {
+    background: rgba(14,36,72,.78);
+    border: 1px solid rgba(216,179,94,.18);
+    padding: 12px;
+    border-radius: 14px;
+}
+
+[data-testid="stMetricValue"],
+[data-testid="stMetricLabel"] {
+    text-align: center !important;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.stButton button,
+.stDownloadButton button,
+[data-testid="stFormSubmitButton"] button {
+    border-radius: 11px !important;
+    font-weight: 800 !important;
+    min-height: 44px !important;
+}
+
+/* =========================================================
+   Dataframe
+   ========================================================= */
+
+[data-testid="stDataFrame"] {
+    direction: rtl !important;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.footer-text {
+    text-align: center !important;
+    direction: rtl !important;
+    color: #d8b35e !important;
+    font-size: .88rem !important;
+    padding: 12px;
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
 @media (max-width: 768px) {
     .main .block-container {
-        width: 94% !important;
-        max-width: 94% !important;
+        max-width: 100% !important;
+        padding: .85rem .75rem 1.7rem !important;
+    }
+
+    .app-title {
+        font-size: 1.55rem !important;
+    }
+
+    .app-branch {
+        font-size: 1rem !important;
+    }
+
+    .app-subtitle {
+        font-size: .88rem !important;
+    }
+
+    section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+        padding-left: .75rem !important;
+        padding-right: .75rem !important;
     }
 }
 
-/* ====================================
-   Navigation - بدون Sidebar
-==================================== */
-
-[data-testid="stSidebar"],
-[data-testid="stSidebarCollapsedControl"] {
-    display: none !important;
-}
-
-.top-nav-title {
-    text-align: right;
-    direction: rtl;
-    color: #d8b35e;
-    font-size: 1rem;
-    font-weight: 800;
-    margin: 8px 0 6px;
-}
-
-[data-testid="stSelectbox"] {
-    width: 100% !important;
-}
-
-[data-testid="stSelectbox"] > div {
-    width: 100% !important;
-}
-
-[data-testid="stSelectbox"] [role="combobox"] {
-    direction: rtl !important;
-    text-align: right !important;
-    min-height: 46px !important;
-    border-radius: 12px !important;
-}
-
-[data-testid="stSelectbox"] [role="option"] {
-    direction: rtl !important;
-    text-align: right !important;
-    white-space: normal !important;
-}
 </style>
 """,
     unsafe_allow_html=True
@@ -577,6 +494,10 @@ branch_name = get_setting(
     "الأكاديمية المهنية للمعلمين - فرع الجيزة"
 )
 
+st.markdown(
+    '<div class="app-header">',
+    unsafe_allow_html=True
+)
 
 st.markdown(
     """
@@ -607,9 +528,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown(
+    '</div>',
+    unsafe_allow_html=True
+)
+
 
 # =========================================================
-# Navigation
+# Navigation - Sidebar
 # =========================================================
 
 pages = [
@@ -628,27 +554,89 @@ if is_admin():
 else:
     pages += ["دخول الإدارة"]
 
-# قائمة التنقل الرئيسية داخل الصفحة — بدون Sidebar
-st.markdown(
-    "<div class=\"top-nav-title\">🧭 القائمة الرئيسية</div>",
-    unsafe_allow_html=True
-)
 
-page = st.selectbox(
-    "الانتقال إلى",
-    pages,
-    label_visibility="collapsed",
-    key="top_navigation"
-)
+# ---------------------------------------------------------
+# Sidebar
+# ---------------------------------------------------------
 
-if is_admin():
-    if st.button("🚪 تسجيل خروج الإدارة", use_container_width=True):
-        log_admin(
-            "تسجيل خروج",
-            "تسجيل خروج الإدارة من النظام."
+with st.sidebar:
+
+    if logo_path.exists():
+        st.image(
+            str(logo_path),
+            width=125
         )
-        st.session_state.admin = False
-        st.rerun()
+
+    st.markdown(
+        """
+        <div class="sidebar-brand">
+            منظومة الحضور والانصراف
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f"""
+        <div class="sidebar-branch">
+            {branch_name}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-section">🧭 القائمة الرئيسية</div>',
+        unsafe_allow_html=True
+    )
+
+    # radio بدل selectbox يعطي قائمة واضحة وثابتة داخل Sidebar
+    page = st.radio(
+        "التنقل",
+        pages,
+        label_visibility="collapsed",
+        key="sidebar_navigation"
+    )
+
+    st.markdown(
+        '<div class="sidebar-section">ℹ️ حالة النظام</div>',
+        unsafe_allow_html=True
+    )
+
+    if is_admin():
+        st.markdown(
+            """
+            <div class="sidebar-status">
+                🟢 <b>وضع الإدارة مفعل</b><br>
+                يمكنك إدارة الموظفين والتقارير والإعدادات.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.write("")
+
+        if st.button(
+            "🚪 تسجيل خروج الإدارة",
+            use_container_width=True
+        ):
+            log_admin(
+                "تسجيل خروج",
+                "تسجيل خروج الإدارة من النظام."
+            )
+            st.session_state.admin = False
+            st.rerun()
+
+    else:
+        st.markdown(
+            """
+            <div class="sidebar-status">
+                🟢 <b>النظام يعمل</b><br>
+                اختر العملية المطلوبة من القائمة.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # =========================================================
