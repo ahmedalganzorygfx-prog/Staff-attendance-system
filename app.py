@@ -1,3 +1,4 @@
+import io
 from datetime import date
 import pandas as pd
 import streamlit as st
@@ -32,10 +33,6 @@ button { direction: rtl !important; }
 /* ===== رأس الصفحة: توسيط اللوجو والعناوين داخل منطقة المحتوى ===== */
 .app-header {
     width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
     text-align: center !important;
     margin: 0 auto 22px auto !important;
     padding: 10px 0 4px !important;
@@ -111,18 +108,23 @@ if "admin" not in st.session_state:
 
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 
-# رأس الصفحة — اللوجو والعناوين في منتصف منطقة المحتوى
+# رأس الصفحة — استخدام st.image لضمان ظهور اللوجو من مجلد assets
+st.markdown('<div class="app-header">', unsafe_allow_html=True)
+
+logo_col = st.columns([1, 2, 1], gap="small")[1]
+with logo_col:
+    st.image(str(logo_path), width=110)
+
 st.markdown(
     f'''
-    <div class="app-header">
-        <img class="app-logo" src="{logo_path.as_posix()}">
-        <div class="app-title">نظام الحضور والانصراف</div>
-        <div class="app-branch">{branch_name}</div>
-        <div class="app-subtitle">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>
-    </div>
+    <div class="app-title">نظام الحضور والانصراف</div>
+    <div class="app-branch">{branch_name}</div>
+    <div class="app-subtitle">نظام رقمي لإدارة حضور وانصراف موظفي الفرع</div>
     ''',
     unsafe_allow_html=True
 )
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("## القائمة")
