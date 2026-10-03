@@ -157,29 +157,26 @@ body,
     direction: rtl !important;
 }
 
+/* الخلفية الجانبية خارج البرنامج */
 [data-testid="stAppViewContainer"] {
-    background:
-        radial-gradient(
-            circle at top,
-            #13264d 0%,
-            #081426 45%,
-            #050c18 100%
-        );
+    background: #e9edf3 !important;
 }
 
+/* مساحة البرنامج نفسها — لون مستقل عن الجوانب */
 .main .block-container {
-
-    max-width: 900px !important;
-
-    width: 100% !important;
-
+    max-width: 50% !important;
+    width: 50% !important;
     margin: 0 auto !important;
-
-    padding-top: 1.1rem !important;
-
-    padding-bottom: 2rem !important;
-
+    padding: 1.1rem 2rem 2rem 2rem !important;
     direction: rtl !important;
+    background: radial-gradient(
+        circle at top,
+        #13264d 0%,
+        #081426 45%,
+        #050c18 100%
+    ) !important;
+    min-height: 100vh !important;
+    box-sizing: border-box !important;
 }
 
 
@@ -492,6 +489,9 @@ textarea {
     .main .block-container {
         width: 94% !important;
         max-width: 94% !important;
+        padding-left: .9rem !important;
+        padding-right: .9rem !important;
+        border-radius: 0 !important;
     }
 }
 
