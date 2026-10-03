@@ -1,196 +1,188 @@
 import sqlite3
-from pathlib import Path
-from datetime import datetime
+from datetime import datetime, date
 
-DB_PATH = Path(__file__).resolve().parent / "data" / "attendance.db"
+DB_NAME = "attendance.db"
 
-
-def normalize_code(value: str) -> str:
-    value = str(value or "")
-    trans = str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "01234567890123456789")
-    return value.translate(trans).strip().upper()
-
-
-def connect():
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH, timeout=10)
+def get_connection():
+    conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-
 def init_db():
-    with connect() as conn:
-        conn.executescript("""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        
+        # جدول الإعدادات
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        )
+        """)
+        
+        # جدول الموظفين
+        cursor.execute("""
         CREATE TABLE IF NOT EXISTS employees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            employee_code TEXT NOT NULL UNIQUE,
+            employee_code TEXT PRIMARY KEY,
             name TEXT NOT NULL,
-            job_title TEXT DEFAULT '',
-            phone TEXT DEFAULT '',
-            active INTEGER NOT NULL DEFAULT 1,
-            created_at TEXT NOT NULL
-        );
-
+            job_title TEXT,
+            phone TEXT,
+            active INTEGER DEFAULT 1
+        )
+        """)
+        
+        # جدول الحضور والانصراف
+        cursor.execute("""
         CREATE TABLE IF NOT EXISTS attendance (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            employee_code TEXT NOT NULL,
-            employee_name TEXT NOT NULL,
-            action TEXT NOT NULL CHECK(action IN ('حضور','انصراف')),
-            work_date TEXT NOT NULL,
-            work_time TEXT NOT NULL,
+            employee_code TEXT,
+            name TEXT,
+            action TEXT,
+            timestamp DATETIME,
             latitude REAL,
             longitude REAL,
             distance_m REAL,
             accuracy_m REAL,
-            created_at TEXT NOT NULL
-        );
-
-        CREATE TABLE IF NOT EXISTS settings (
-            key TEXT PRIMARY KEY,
-            value TEXT NOT NULL
-        );
+            FOREIGN KEY (employee_code) REFERENCES employees (employee_code)
+        )
         """)
-        defaults = {
-            "branch_name": "الأكاديمية المهنية للمعلمين – فرع الجيزة",
-            "branch_latitude": "",
-            "branch_longitude": "",
-            "radius_m": "100",
-            "admin_password": "123456",
-            "site_token": "",
-        }
-        for k, v in defaults.items():
-            conn.execute("INSERT OR IGNORE INTO settings(key,value) VALUES(?,?)", (k, v))
+        conn.commit()
 
-
+# --- إدارة الإعدادات ---
 def get_setting(key, default=""):
-    with connect() as conn:
-        row = conn.execute("SELECT value FROM settings WHERE key=?", (key,)).fetchone()
-    return row["value"] if row else default
-
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
+        row = cursor.fetchone()
+        return row["value"] if row else default
 
 def set_setting(key, value):
-    with connect() as conn:
-        conn.execute("""
-            INSERT INTO settings(key,value) VALUES(?,?)
-            ON CONFLICT(key) DO UPDATE SET value=excluded.value
-        """, (key, str(value)))
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, str(value)))
+        conn.commit()
 
-
-def get_employee(code, active_only=False):
-    code = normalize_code(code)
-    sql = "SELECT * FROM employees WHERE employee_code=?"
-    params = [code]
-    if active_only:
-        sql += " AND active=1"
-    with connect() as conn:
-        row = conn.execute(sql, params).fetchone()
-    return dict(row) if row else None
-
+# --- إدارة الموظفين ---
+def normalize_code(code):
+    if not code:
+        return ""
+    return str(code).strip().zfill(3)
 
 def add_employee(code, name, job_title="", phone=""):
     code = normalize_code(code)
-    name = str(name or "").strip()
-    job_title = str(job_title or "").strip()
-    phone = str(phone or "").strip()
-    if not code:
-        return False, "أدخل كود الموظف."
-    if not name:
-        return False, "أدخل اسم الموظف."
-
-    existing = get_employee(code)
-    if existing:
-        status = "نشط" if existing["active"] else "غير نشط"
-        return False, f"كود الموظف {code} موجود بالفعل باسم {existing['name']} ({status})."
-
-    try:
-        with connect() as conn:
-            conn.execute("""
-                INSERT INTO employees(employee_code,name,job_title,phone,active,created_at)
-                VALUES(?,?,?,?,1,?)
-            """, (code, name, job_title, phone, datetime.now().isoformat(timespec="seconds")))
+    if not code or not name:
+        return False, "يرجى إدخال كود واسم الموظف."
+    
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT employee_code FROM employees WHERE employee_code = ?", (code,))
+        if cursor.fetchone():
+            return False, "كود الموظف مستخدم بالفعل."
+        
+        cursor.execute(
+            "INSERT INTO employees (employee_code, name, job_title, phone, active) VALUES (?, ?, ?, ?, 1)",
+            (code, name, job_title, phone)
+        )
+        conn.commit()
         return True, "تمت إضافة الموظف بنجاح."
-    except sqlite3.IntegrityError:
-        return False, f"كود الموظف {code} موجود بالفعل."
 
-
-def update_employee(original_code, name, job_title, phone):
-    code = normalize_code(original_code)
-    with connect() as conn:
-        cur = conn.execute("""
-            UPDATE employees SET name=?, job_title=?, phone=? WHERE employee_code=?
-        """, (str(name).strip(), str(job_title or "").strip(), str(phone or "").strip(), code))
-        return cur.rowcount > 0
-
-
-def set_employee_active(code, active):
-    with connect() as conn:
-        cur = conn.execute("UPDATE employees SET active=? WHERE employee_code=?", (1 if active else 0, normalize_code(code)))
-        return cur.rowcount > 0
-
-
-def delete_employee(code):
-    with connect() as conn:
-        cur = conn.execute("DELETE FROM employees WHERE employee_code=?", (normalize_code(code),))
-        return cur.rowcount > 0
-
+def get_employee(code, active_only=True):
+    code = normalize_code(code)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        query = "SELECT * FROM employees WHERE employee_code = ?"
+        if active_only:
+            query += " AND active = 1"
+        cursor.execute(query, (code,))
+        row = cursor.fetchone()
+        return dict(row) if row else None
 
 def list_employees():
-    with connect() as conn:
-        return [dict(r) for r in conn.execute("SELECT * FROM employees ORDER BY name COLLATE NOCASE").fetchall()]
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM employees ORDER BY employee_code ASC")
+        return [dict(row) for row in cursor.fetchall()]
 
+def update_employee(code, name, job_title, phone):
+    code = normalize_code(code)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE employees SET name = ?, job_title = ?, phone = ? WHERE employee_code = ?",
+            (name, job_title, phone, code)
+        )
+        conn.commit()
+        return True
+
+def set_employee_active(code, active_status):
+    code = normalize_code(code)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE employees SET active = ? WHERE employee_code = ?", (1 if active_status else 0, code))
+        conn.commit()
+
+def delete_employee(code):
+    code = normalize_code(code)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM employees WHERE employee_code = ?", (code,))
+        conn.commit()
+
+# --- إدارة الحضور والانصراف ---
+def record_attendance(employee, action, lat, lon, dist, accuracy):
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cursor.execute("""
+            INSERT INTO attendance (employee_code, name, action, timestamp, latitude, longitude, distance_m, accuracy_m)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (employee["employee_code"], employee["name"], action, now, lat, lon, dist, accuracy))
+        conn.commit()
 
 def today_records(code):
     code = normalize_code(code)
-    today = datetime.now().strftime("%Y-%m-%d")
-    with connect() as conn:
-        rows = conn.execute("""
-            SELECT action, work_time, distance_m, accuracy_m
-            FROM attendance WHERE employee_code=? AND work_date=? ORDER BY id
-        """, (code, today)).fetchall()
-    return [dict(r) for r in rows]
-
-
-def record_attendance(employee, action, latitude, longitude, distance_m, accuracy_m):
-    now = datetime.now()
-    with connect() as conn:
-        conn.execute("""
-            INSERT INTO attendance(
-                employee_code,employee_name,action,work_date,work_time,
-                latitude,longitude,distance_m,accuracy_m,created_at
-            ) VALUES(?,?,?,?,?,?,?,?,?,?)
-        """, (
-            employee["employee_code"], employee["name"], action,
-            now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"),
-            latitude, longitude, distance_m, accuracy_m, now.isoformat(timespec="seconds")
-        ))
-
-
-def attendance_report(start_date=None, end_date=None, code=None):
-    sql = """
-        SELECT employee_code AS 'كود الموظف', employee_name AS 'اسم الموظف',
-               action AS 'العملية', work_date AS 'التاريخ', work_time AS 'الوقت',
-               ROUND(distance_m,2) AS 'المسافة بالمتر', accuracy_m AS 'دقة الموقع بالمتر',
-               latitude AS 'خط العرض', longitude AS 'خط الطول'
-        FROM attendance WHERE 1=1
-    """
-    params = []
-    if start_date:
-        sql += " AND work_date >= ?"; params.append(str(start_date))
-    if end_date:
-        sql += " AND work_date <= ?"; params.append(str(end_date))
-    if code:
-        sql += " AND employee_code = ?"; params.append(normalize_code(code))
-    sql += " ORDER BY work_date DESC, work_time DESC"
-    with connect() as conn:
-        return [dict(r) for r in conn.execute(sql, params).fetchall()]
-
+    today_str = date.today().strftime("%Y-%m-%d")
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT action, timestamp, distance_m FROM attendance 
+            WHERE employee_code = ? AND date(timestamp) = ? 
+            ORDER BY id DESC
+        """, (code, today_str))
+        return [dict(row) for row in cursor.fetchall()]
 
 def stats_today():
-    today = datetime.now().strftime("%Y-%m-%d")
-    with connect() as conn:
-        total = conn.execute("SELECT COUNT(*) c FROM employees").fetchone()["c"]
-        active = conn.execute("SELECT COUNT(*) c FROM employees WHERE active=1").fetchone()["c"]
-        present = conn.execute("SELECT COUNT(*) c FROM attendance WHERE work_date=? AND action='حضور'", (today,)).fetchone()["c"]
-        departed = conn.execute("SELECT COUNT(*) c FROM attendance WHERE work_date=? AND action='انصراف'", (today,)).fetchone()["c"]
-    return {"total": total, "active": active, "present": present, "departed": departed}
+    today_str = date.today().strftime("%Y-%m-%d")
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) as total FROM employees")
+        total = cursor.fetchone()["total"]
+        
+        cursor.execute("SELECT COUNT(*) as active FROM employees WHERE active = 1")
+        active = cursor.fetchone()["active"]
+        
+        cursor.execute("SELECT COUNT(DISTINCT employee_code) as present FROM attendance WHERE date(timestamp) = ? AND action = 'حضور'", (today_str,))
+        present = cursor.fetchone()["present"]
+        
+        cursor.execute("SELECT COUNT(DISTINCT employee_code) as departed FROM attendance WHERE date(timestamp) = ? AND action = 'انصراف'", (today_str,))
+        departed = cursor.fetchone()["departed"]
+        
+        return {"total": total, "active": active, "present": present, "departed": departed}
+
+def attendance_report(start_date, end_date, code_filter=None):
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        query = """
+            SELECT employee_code as "كود الموظف", name as "اسم الموظف", action as "العملية", 
+                   timestamp as "التاريخ والوقت", distance_m as "المسافة (متر)"
+            FROM attendance 
+            WHERE date(timestamp) BETWEEN ? AND ?
+        """
+        params = [start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")]
+        if code_filter:
+            query += " AND employee_code = ?"
+            params.append(normalize_code(code_filter))
+            
+        query += " ORDER BY timestamp DESC"
+        cursor.execute(query, params)
+        return [dict(row) for row in cursor.fetchall()]
