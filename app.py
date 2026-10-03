@@ -584,12 +584,6 @@ else:
 
 with st.sidebar:
 
-    if logo_path.exists():
-        st.image(
-            str(logo_path),
-            width=125
-        )
-
     st.markdown(
         """
         <div class="sidebar-brand">
