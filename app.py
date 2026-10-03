@@ -33,7 +33,7 @@ if "admin" not in st.session_state:
 # 4. اللوجو والعناوين المنسقة في المنتصف
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 if logo_path.exists():
-    st.image(str(logo_path), width=130)
+    st.image(str(logo_path), width=140)
 
 st.title("منظومة حضور وانصراف العاملين")
 st.subheader(f"{branch_name} – فرع الجيزة")
