@@ -472,10 +472,6 @@ textarea {
 # Logo
 # =========================================================
 
-# =========================
-# Logo & Header
-# =========================
-
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 
 st.markdown("""
