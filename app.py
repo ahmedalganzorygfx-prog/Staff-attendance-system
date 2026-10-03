@@ -16,10 +16,11 @@ st.set_page_config(
 )
 init_db()
 
-# 2. التنسيق: توسيط العناصر، نقل القائمة لليمين، واتجاه النصوص RTL
-st.markdown("""
+# 2. التنسيق البرمجي المضمون بدون نصوص HTML ممتدة
+css_code = """
 
-""", unsafe_allow_html=True)
+"""
+st.markdown(css_code, unsafe_allow_html=True)
 
 # 3. إدارة الجلسة
 branch_name = get_setting("branch_name", "الأكاديمية المهنية للمعلمين")
@@ -30,17 +31,17 @@ def is_admin():
 if "admin" not in st.session_state:
     st.session_state.admin = False
 
-# 4. اللوجو والعناوين المنسقة في المنتصف
+# 4. الشعار والعناوين
 logo_path = Path(__file__).resolve().parent / "assets" / "logo.png"
 if logo_path.exists():
-    st.image(str(logo_path), width=140)
+    st.image(str(logo_path), width=100)
 
 st.title("منظومة حضور وانصراف العاملين")
 st.subheader(f"{branch_name} – فرع الجيزة")
 st.caption("نظام رقمي لإدارة حضور وانصراف موظفي الفرع")
 st.divider()
 
-# 5. القائمة الجانبية جهة اليمين
+# 5. القائمة الجانبية
 with st.sidebar:
     st.markdown("### ☰ القائمة")
     pages = ["تسجيل الحضور والانصراف", "QR Code"]
@@ -65,7 +66,7 @@ if page == "تسجيل الحضور والانصراف":
         st.stop()
 
     action = st.radio("العملية", ["حضور", "انصراف"], horizontal=True)
-    code = st.text_input("كود الموظف", placeholder="أدخل الكود")
+    code = st.text_input("كود الموظف", placeholder="أدخل اسم المستخدم / الكود")
     
     if st.button("📍 التحقق من الموقع وتسجيل العملية", type="primary", use_container_width=True):
         code = normalize_code(code)
@@ -178,7 +179,7 @@ elif page == "الموظفون":
         df["الحالة"] = df["active"].map({1: "نشط", 0: "غير نشط"})
         st.dataframe(df[["employee_code", "name", "job_title", "phone", "الحالة"]].rename(columns={"employee_code": "كود الموظف", "name": "اسم الموظف", "job_title": "الوظيفة", "phone": "الهاتف"}), use_container_width=True, hide_index=True)
 
-        st.markdown("### ✏️ تعديل / تفعيل / تعطيل / حذف")
+        st.markdown("### ✏️️ تعديل / تفعيل / تعطيل / حذف")
         selected = st.selectbox("اختر الموظف", [f"{e['employee_code']} — {e['name']}" for e in employees])
         selected_code = selected.split(" — ", 1)[0]
         emp = get_employee(selected_code) or get_employee(selected_code, active_only=False)
@@ -229,6 +230,16 @@ elif page == "إعدادات الفرع":
     if st.button("إنشاء / تغيير QR", use_container_width=True):
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
-# 7. التذييل
+# 7. البطاقات الملونة الأربع في الأسفل عبر Columns القياسية
 st.divider()
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    st.success("🛡️ **أمان البيانات**\n\nحماية وخصوصية عالية")
+with col2:
+    st.info("⏱️ **دقة في التسجيل**\n\nوقت الحضور والانصراف")
+with col3:
+    st.warning("📍 **تحديد الموقع**\n\nضمن نطاق الفرع")
+with col4:
+    st.error("👥 **إدارة فعالة**\n\nلمواردنا البشرية")
+
 st.caption("— تصميم وتنفيذ أحمد الجنزوري (مدير الفرع) —")
