@@ -150,11 +150,20 @@ st.markdown(
    عام
 ==================================== */
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box !important;
+}
+
 html,
 body,
 [data-testid="stAppViewContainer"],
 [data-testid="stApp"] {
     direction: rtl !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
 
 [data-testid="stAppViewContainer"] {
@@ -168,20 +177,23 @@ body,
 }
 
 .main .block-container {
-
     max-width: 900px !important;
-
     width: 100% !important;
-
     margin: 0 auto !important;
-
     padding-top: 1.1rem !important;
-
     padding-bottom: 2rem !important;
-
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
     direction: rtl !important;
+    overflow-x: hidden !important;
 }
 
+/* منع الأعمدة من الانكماش لدرجة تكسير الحروف */
+[data-testid="column"],
+.stColumn {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
 
 /* ====================================
    النصوص
@@ -192,31 +204,29 @@ body,
 .stMarkdown,
 .stText,
 .stCaption {
-
     direction: rtl !important;
-
     text-align: right !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    white-space: normal !important;
 }
-
 
 h1,
 h2,
-h3 {
-
+h3,
+p {
     direction: rtl !important;
-
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
 }
-
 
 label,
 [data-testid="stWidgetLabel"] p,
 [data-testid="stWidgetLabel"] div {
-
     text-align: right !important;
-
     direction: rtl !important;
+    white-space: normal !important;
 }
-
 
 /* ====================================
    Inputs
@@ -224,21 +234,17 @@ label,
 
 input,
 textarea {
-
     direction: rtl !important;
-
     text-align: right !important;
+    max-width: 100% !important;
 }
-
 
 /* ====================================
    Sidebar
 ==================================== */
 
 [data-testid="stSidebar"] {
-
     direction: rtl !important;
-
     background:
         linear-gradient(
             180deg,
@@ -247,144 +253,113 @@ textarea {
         );
 }
 
-
 [data-testid="stSidebar"] * {
-
     direction: rtl !important;
-
     text-align: right !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
 }
 
+/* ====================================
+   الشعار
+==================================== */
+
+[data-testid="stImage"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+[data-testid="stImage"] img {
+    max-width: min(160px, 55vw) !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
 
 /* ====================================
    العنوان
 ==================================== */
 
 .app-title {
-
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     text-align: center !important;
-
     color: #ffffff;
-
     font-size: 2rem;
-
     font-weight: 900;
-
-    line-height: 1.5;
-
+    line-height: 1.45;
     margin-top: 4px;
+    padding: 0 4px;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    white-space: normal !important;
 }
-
 
 .app-branch {
-
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     text-align: center !important;
-
     color: #d8b35e;
-
     font-size: 1.15rem;
-
     font-weight: 800;
-
+    line-height: 1.5;
     margin-top: 7px;
+    padding: 0 4px;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    white-space: normal !important;
 }
-
 
 .app-subtitle {
-
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     text-align: center !important;
-
     color: #aebbd0;
-
     font-size: 0.98rem;
-
+    line-height: 1.7;
     margin-top: 5px;
-
     margin-bottom: 18px;
+    padding: 0 4px;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    white-space: normal !important;
 }
-
 
 /* ====================================
    Cards
 ==================================== */
 
 .custom-card {
-
-    border:
-        1px solid
-        rgba(
-            216,
-            179,
-            94,
-            0.25
-        );
-
-    background:
-        rgba(
-            13,
-            31,
-            61,
-            0.7
-        );
-
-    border-radius:
-        18px;
-
-    padding:
-        18px;
-
-    margin-bottom:
-        16px;
-
-    box-shadow:
-        0px 8px 24px
-        rgba(
-            0,
-            0,
-            0,
-            0.12
-        );
+    width: 100% !important;
+    max-width: 100% !important;
+    border: 1px solid rgba(216, 179, 94, 0.25);
+    background: rgba(13, 31, 61, 0.7);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
 }
-
 
 /* ====================================
    Metrics
 ==================================== */
 
 [data-testid="stMetric"] {
-
-    background:
-        rgba(
-            14,
-            36,
-            72,
-            .75
-        );
-
-    border:
-        1px solid
-        rgba(
-            216,
-            179,
-            94,
-            .18
-        );
-
-    padding:
-        12px;
-
-    border-radius:
-        14px;
+    background: rgba(14, 36, 72, .75);
+    border: 1px solid rgba(216, 179, 94, .18);
+    padding: 12px;
+    border-radius: 14px;
+    min-width: 0 !important;
 }
-
 
 [data-testid="stMetricValue"],
 [data-testid="stMetricLabel"] {
-
-    text-align:
-        center !important;
+    text-align: center !important;
 }
-
 
 /* ====================================
    Buttons
@@ -392,73 +367,117 @@ textarea {
 
 .stButton button,
 .stDownloadButton button {
-
-    border-radius:
-        10px !important;
-
-    font-weight:
-        700 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    min-height: 44px !important;
 }
-
 
 /* ====================================
    Dataframe
 ==================================== */
 
 [data-testid="stDataFrame"] {
-
-    direction:
-        rtl !important;
+    direction: rtl !important;
+    max-width: 100% !important;
 }
-
 
 /* ====================================
    Footer
 ==================================== */
 
 .footer-text {
-
-    text-align:
-        center !important;
-
-    color:
-        #d8b35e;
-
-    font-size:
-        .88rem;
-
-    padding:
-        12px;
+    text-align: center !important;
+    color: #d8b35e;
+    font-size: .88rem;
+    padding: 12px;
 }
-
 
 /* ====================================
    موبايل
 ==================================== */
 
-@media (
-    max-width: 768px
-) {
+@media (max-width: 768px) {
+
+    .main .block-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: .85rem !important;
+        padding-right: .85rem !important;
+        padding-top: .7rem !important;
+    }
 
     .app-title {
-
-        font-size:
-            1.55rem;
+        font-size: clamp(1.35rem, 6.2vw, 1.65rem) !important;
+        line-height: 1.5 !important;
+        margin-top: 2px !important;
     }
 
     .app-branch {
-
-        font-size:
-            1rem;
+        font-size: clamp(.9rem, 4.2vw, 1.05rem) !important;
+        line-height: 1.55 !important;
     }
 
+    .app-subtitle {
+        font-size: .88rem !important;
+        line-height: 1.7 !important;
+        margin-bottom: 14px !important;
+    }
+
+    [data-testid="stImage"] img {
+        max-width: 135px !important;
+    }
+
+    [data-testid="stRadio"] > div {
+        flex-wrap: wrap !important;
+        gap: .4rem !important;
+    }
+
+    [data-testid="stRadio"] label {
+        white-space: normal !important;
+        min-width: 0 !important;
+    }
+
+    .stButton button,
+    .stDownloadButton button {
+        font-size: .95rem !important;
+        padding: .65rem .75rem !important;
+    }
+
+    [data-testid="stAlert"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+}
+
+/* ====================================
+   موبايلات صغيرة جدًا
+==================================== */
+
+@media (max-width: 420px) {
+
     .main .block-container {
+        padding-left: .65rem !important;
+        padding-right: .65rem !important;
+    }
 
-        padding-left:
-            .7rem !important;
+    .app-title {
+        font-size: 1.28rem !important;
+    }
 
-        padding-right:
-            .7rem !important;
+    .app-branch {
+        font-size: .88rem !important;
+    }
+
+    .app-subtitle {
+        font-size: .82rem !important;
+    }
+
+    [data-testid="stImage"] img {
+        max-width: 120px !important;
     }
 }
 
