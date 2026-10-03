@@ -401,21 +401,84 @@ textarea {
 
 @media screen and (max-width: 768px) {
 
-    /* Keep the Streamlit sidebar from collapsing into a thin strip */
+    /* ==================================================
+       إصلاح Sidebar على شاشات الهاتف
+       Streamlit يغيّر عرض الـ section نفسه على الموبايل،
+       لذلك يجب تثبيت الـ flex-basis والعرض على العنصر الخارجي
+       وليس على العناصر الداخلية فقط.
+    ================================================== */
+
+    section[data-testid="stSidebar"],
     [data-testid="stSidebar"] {
-        min-width: 280px !important;
-        width: 280px !important;
-        max-width: 280px !important;
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
+        flex: 0 0 300px !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
     }
 
+    section[data-testid="stSidebar"] > div,
     [data-testid="stSidebar"] > div {
-        width: 280px !important;
-        max-width: 280px !important;
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
     }
 
-    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+    /* مساحة محتوى القائمة نفسها */
+    section[data-testid="stSidebar"] [data-testid="stSidebarContent"],
+    [data-testid="stSidebarContent"] {
         width: 100% !important;
+        min-width: 0 !important;
         max-width: 100% !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    /* لا تسمح لعناصر القائمة بأن يصبح عرضها بضعة بكسلات */
+    section[data-testid="stSidebar"] [data-testid="stVerticalBlock"],
+    section[data-testid="stSidebar"] [data-testid="stElementContainer"],
+    section[data-testid="stSidebar"] [data-testid="stRadio"],
+    section[data-testid="stSidebar"] [data-testid="stRadio"] > div {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* عنوان القائمة */
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] p {
+        width: 100% !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+    }
+
+    /* Radio options: النص أفقي وليس حرفًا تحت حرف */
+    section[data-testid="stSidebar"] [data-testid="stRadio"] label,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] label div {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        display: block !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        direction: rtl !important;
+        text-align: right !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        line-break: auto !important;
     }
 
     /* Main page */
@@ -565,11 +628,13 @@ textarea {
         padding-right: 10px !important;
     }
 
+    section[data-testid="stSidebar"],
     [data-testid="stSidebar"],
     [data-testid="stSidebar"] > div {
-        min-width: 270px !important;
-        width: 270px !important;
-        max-width: 270px !important;
+        min-width: 300px !important;
+        width: 300px !important;
+        max-width: 300px !important;
+        flex-basis: 300px !important;
     }
 
     [data-testid="stImage"] img {
