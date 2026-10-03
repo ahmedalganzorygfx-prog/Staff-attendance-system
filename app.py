@@ -16,13 +16,10 @@ st.set_page_config(
 )
 init_db()
 
-# 2. التنسيق والتوسيط عبر CSS
-st.markdown(
-    """
-    
-    """,
-    unsafe_allow_html=True
-)
+# 2. التنسيق والتوسيط عبر CSS القياسي
+st.markdown("""
+
+""", unsafe_allow_html=True)
 
 # 3. إدارة الجلسة
 branch_name = get_setting("branch_name", "الأكاديمية المهنية للمعلمين")
@@ -234,6 +231,6 @@ elif page == "إعدادات الفرع":
     if st.button("إنشاء / تغيير QR", use_container_width=True):
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
-# 7. البطاقات الملونة والتذييل
-st.markdown(
-    """
+# 7. التذييل السفلي
+st.divider()
+st.caption("— تصميم وتنفيذ أحمد الجنزوري (مدير الفرع) —")
