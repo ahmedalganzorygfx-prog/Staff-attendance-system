@@ -17,9 +17,10 @@ st.set_page_config(
 init_db()
 
 # 2. التنسيق والتوسيط عبر CSS
-st.markdown("""
-
-""", unsafe_allow_html=True)
+st.markdown(
+    "",
+    unsafe_allow_html=True
+)
 
 # 3. إدارة الجلسة
 branch_name = get_setting("branch_name", "الأكاديمية المهنية للمعلمين")
@@ -232,4 +233,5 @@ elif page == "إعدادات الفرع":
         set_setting("site_token", token()); st.success("تم إنشاء QR جديد."); st.rerun()
 
 # 7. البطاقات الملونة والتذييل
-features_html = """
+st.markdown(
+    '
