@@ -160,19 +160,6 @@ body,
     direction: rtl !important;
 }
 
-/* =========================================================
-   إخفاء شريط الأدوات العلوي في Streamlit
-   مع الإبقاء على زر طي/فتح القائمة الجانبية
-   ========================================================= */
-
-[data-testid="stToolbar"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-}
-
 [data-testid="stAppViewContainer"] {
     background:
         radial-gradient(circle at top right, #17335f 0%, #0a1830 42%, #050b16 100%);
@@ -228,6 +215,22 @@ select,
 [data-baseweb="select"] > div {
     direction: rtl !important;
     text-align: right !important;
+}
+
+/* =========================================================
+   إخفاء شريط الأدوات العلوي في Streamlit
+   ========================================================= */
+
+[data-testid="stToolbar"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
 }
 
 /* =========================================================
@@ -515,9 +518,27 @@ if logo_path.exists():
 
     with logo_col:
 
+        st.markdown(
+            """
+            <div style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: translateX(-180px);
+                width: 100%;
+            "">
+            """,
+            unsafe_allow_html=True
+        )
+
         st.image(
             str(logo_path),
             width=160
+        )
+
+        st.markdown(
+            "</div>",
+            unsafe_allow_html=True
         )
 
 
