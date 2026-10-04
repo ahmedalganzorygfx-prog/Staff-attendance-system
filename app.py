@@ -160,6 +160,19 @@ body,
     direction: rtl !important;
 }
 
+/* =========================================================
+   إخفاء شريط الأدوات العلوي في Streamlit
+   مع الإبقاء على زر طي/فتح القائمة الجانبية
+   ========================================================= */
+
+[data-testid="stToolbar"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+}
+
 [data-testid="stAppViewContainer"] {
     background:
         radial-gradient(circle at top right, #17335f 0%, #0a1830 42%, #050b16 100%);
