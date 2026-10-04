@@ -356,9 +356,9 @@ section[data-testid="stSidebar"] .stButton button {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: 0 0 -14px 0 !important;
+    margin: 0 0 -45px 0 !important;
     padding: 0 !important;
-    transform: translateX(-180px) !important;
+    transform: translateX(-250px) !important;
 }
 
 .main-logo-wrap img {
