@@ -348,13 +348,32 @@ section[data-testid="stSidebar"] .stButton button {
 }
 
 /* =========================================================
+   Logo الرئيسي - توسيط بصري وقربه من العنوان
+   ========================================================= */
+
+.main-logo-wrap {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 0 -14px 0 !important;
+    padding: 0 !important;
+    transform: translateX(-180px) !important;
+}
+
+.main-logo-wrap img {
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+/* =========================================================
    Header الرئيسي
    ========================================================= */
 
 .app-header {
     text-align: center !important;
     direction: rtl !important;
-    padding: .15rem .5rem 1rem !important;
+    padding: 0 .5rem 1rem !important;
 }
 
 .app-title {
@@ -363,7 +382,7 @@ section[data-testid="stSidebar"] .stButton button {
     font-size: 2.05rem !important;
     font-weight: 900 !important;
     line-height: 1.5 !important;
-    margin-top: 4px !important;
+    margin-top: 0 !important;
 }
 
 .app-branch {
@@ -496,7 +515,7 @@ section[data-testid="stSidebar"] .stButton button {
 
 
 # =========================================================
-# Logo
+# Logo الرئيسي
 # =========================================================
 
 BASE_DIR = Path(
@@ -519,15 +538,7 @@ if logo_path.exists():
     with logo_col:
 
         st.markdown(
-            """
-            <div style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transform: translateX(-180px);
-                width: 100%;
-            "">
-            """,
+            '<div class="main-logo-wrap">',
             unsafe_allow_html=True
         )
 
@@ -537,7 +548,7 @@ if logo_path.exists():
         )
 
         st.markdown(
-            "</div>",
+            '</div>',
             unsafe_allow_html=True
         )
 
